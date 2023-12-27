@@ -13,7 +13,7 @@ import java.sql.Date;
 @Getter
 @Setter
 public class Pet {
-    int id;
+    Long id;
     String name;
     String species;
     String breed;
@@ -22,7 +22,7 @@ public class Pet {
     String healthStatus;
     String behavior;
     String description;
-    int shelterID;
+    Long shelterID;
     HouseTraining trainingStatus;
     NeuturingStatus neuturingStatus;
 

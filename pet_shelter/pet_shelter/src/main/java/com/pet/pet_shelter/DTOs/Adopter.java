@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Adopter {
-    int id;
+    Long id;
     String firstName;
     String lastName;
     String address;

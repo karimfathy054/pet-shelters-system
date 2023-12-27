@@ -8,6 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AdoptionRecord {
-    int petId;
-    int adopterID;
+    Long petId;
+    Long adopterID;
 }

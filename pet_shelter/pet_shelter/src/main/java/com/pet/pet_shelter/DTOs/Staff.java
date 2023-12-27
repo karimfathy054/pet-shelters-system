@@ -9,10 +9,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Staff {
-    int id;
+    Long id;
     String firstname;
     String lastName;
     Role role;
-    int shelterID;
+    Long shelterID;
 
 }
