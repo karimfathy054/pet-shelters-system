@@ -31,7 +31,7 @@ public class AdopterService {
             ResultSet resultSet = conn.prepareStatement(getUserQuery).executeQuery();
             if(resultSet.next()){
                 return Adopter.builder()
-                        .adopterId(resultSet.getInt("adopter_id"))
+                        .adopterId(resultSet.getLong("adopter_id"))
                         .phone(resultSet.getString("phone"))
                         .address(resultSet.getString("address"))
                         .firstName(resultSet.getString("firstName"))
