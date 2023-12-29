@@ -14,7 +14,7 @@ public class StaffController {
     RequestService requestService;
     @Autowired
     StaffService staffService;
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<Staff> login(@RequestBody Map<String, String> body){
         Staff staff = staffService.signIn(body.get("email"), body.get("password"));
         if(staff == null){

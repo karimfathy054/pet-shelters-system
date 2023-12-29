@@ -13,10 +13,10 @@ public class StaffService {
 
     private Connection conn;
     private String username = "root";
-    private String password = "password";
+    private String password = "#mora951753132547698#";
     private String url = "jdbc:mysql://localhost:3306/mydb";
     StaffService() throws SQLException, ClassNotFoundException {
-        Class.forName("com.mysql.cj.jdbc.Driver");
+        Class.forName("com.mysql.jdbc.Driver");
         conn = DriverManager.getConnection(url, username, password);
     }
     private Staff getStaff(String email, String password){
