@@ -27,7 +27,7 @@ public class AdopterService {
             ResultSet resultSet = conn.prepareStatement(getUserQuery).executeQuery();
             if(resultSet.next()){
                 return Adopter.builder()
-                        .id(resultSet.getLong("adopter_id"))
+                        .adopterId(resultSet.getLong("adopter_id"))
                         .phone(resultSet.getString("phone"))
                         .address(resultSet.getString("address"))
                         .firstName(resultSet.getString("firstName"))
@@ -71,7 +71,7 @@ public class AdopterService {
                         .email(resultSet.getString("email"))
                         .password(resultSet.getString("password"))
                         .joinDate(resultSet.getTimestamp("join_date"))
-                        .id(resultSet.getLong("adopter_id"))
+                        .adopterId(resultSet.getLong("adopter_id"))
                         .firstName(resultSet.getString("firstName"))
                         .secondName(resultSet.getString("secondName"))
                         .phone(resultSet.getString("phone"))
