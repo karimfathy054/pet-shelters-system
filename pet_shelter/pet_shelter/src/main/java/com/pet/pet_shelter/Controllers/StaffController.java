@@ -32,6 +32,14 @@ public class StaffController {
         }
         return ResponseEntity.status(409).body(response);
     }
+    @GetMapping("/getByEmail/{email}")
+    public ResponseEntity<Staff> getByEmail(@PathVariable String email){
+        Staff staff = staffService.getByEmail(email);
+        if(staff != null){
+            return ResponseEntity.ok().body(staff);
+        }
+        return ResponseEntity.notFound().build();
+    }
     @PostMapping("/makeManager")
     public ResponseEntity<String> makeManager(@RequestBody Map<String,String> body){
             String response = staffService.makeManager(body.get("email"));
@@ -76,6 +84,9 @@ public class StaffController {
         }
         return ResponseEntity.status(409).body(response);
     }
+
+
+
 
 //    @PostMapping("/addApplication")
 //    public addApplication(){
