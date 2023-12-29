@@ -23,8 +23,10 @@ public class AdoptionRecordDao {
     }
 
     public List<AdoptionRecord> getRecordsByPet(Long petId){
-        return jdbc.query("select * from adoption_record where addoption_record.pet_id = ?", new AdoptionRecordRowMapper(),petId);
+        return jdbc.query("select adopting_family , pet_id from adoption_record where adoption_record.pet_id = ?", new AdoptionRecordRowMapper(),petId);
     }
+
+    
 
     static class AdoptionRecordRowMapper implements RowMapper<AdoptionRecord>{
 
