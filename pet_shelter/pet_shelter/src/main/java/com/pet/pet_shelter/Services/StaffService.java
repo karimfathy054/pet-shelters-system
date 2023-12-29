@@ -1,6 +1,7 @@
 package com.pet.pet_shelter.Services;
 
 import com.pet.pet_shelter.DTOs.*;
+import com.pet.pet_shelter.ENUMS.ApplicationStatus;
 import org.springframework.stereotype.Service;
 
 import java.sql.*;
@@ -211,7 +212,6 @@ public class StaffService {
     }
 
     public String addAdopter(Adopter adopter) {
-        String shelterId;
         String addAdopterQuery =
                 String.format("INSERT INTO ADOPTER(email, password, firstName, secondName, address, phone) " +
                                 "VALUES('%s', '%s', '%s', '%s', '%s', '%s');"
@@ -226,8 +226,19 @@ public class StaffService {
         }
     }
 
-    public String addApplication(AdoptionApplication application) {
-        return null;
+    public String addApplication(long petId, long adopterId) {
+        String addApplicationQuery =
+                String.format("INSERT INTO ADOPTION_APPLICATION(pet_id, adopter_id, status) " +
+                                "VALUES(%d, %d, '%s');"
+                        , petId, adopterId, ApplicationStatus.PENDING);
+        System.out.println("Add Application Query = " + addApplicationQuery);
+        try{
+            conn.prepareStatement(addApplicationQuery).execute();
+            return "Application Submitted!!";
+        }catch (SQLException e) {
+            e.printStackTrace();
+            return e.getMessage();
+        }
     }
 
 
