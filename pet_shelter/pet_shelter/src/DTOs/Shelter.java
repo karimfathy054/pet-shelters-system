@@ -7,7 +7,10 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class AdoptionRecord {
-    int petId;
-    int adopterID;
+public class Shelter {
+    Integer id;
+    String name;
+    String location;
+    String phoneNumber;
+    Integer managerId;
 }

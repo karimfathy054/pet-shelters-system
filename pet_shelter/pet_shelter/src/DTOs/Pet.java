@@ -2,27 +2,28 @@ package com.pet.pet_shelter.DTOs;
 
 import com.pet.pet_shelter.ENUMS.Gender;
 import com.pet.pet_shelter.ENUMS.HouseTraining;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.sql.Date;
 
 @Builder
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class Pet {
-    long petId;
+    Long id;
     String name;
     String species;
     String breed;
     Date birthDate;
+    int age;
     Gender gender;
     String healthStatus;
     String behavior;
     String description;
-    int shelterId;
-    HouseTraining trainingStatus;
-    boolean neuteringStatus;
+    HouseTraining houseTraining;
+    Boolean neuturingStatus;
+    Integer shelterID;
     Date joinDate;
 }

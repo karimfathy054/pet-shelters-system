@@ -1,6 +1,6 @@
 package com.pet.pet_shelter.ENUMS;
 
 public enum HouseTraining {
-    TRAINED,
-    NOT_TRAINED
+    trained,
+    not_trained
 }
