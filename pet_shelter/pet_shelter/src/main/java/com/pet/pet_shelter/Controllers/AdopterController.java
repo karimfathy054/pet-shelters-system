@@ -16,7 +16,7 @@ public class AdopterController {
     @Autowired
     AdopterService adopterService;
 
-    @GetMapping("/signIn")
+    @PostMapping("/signIn")
     public ResponseEntity<Adopter> signIn(@RequestBody Map<String, String> body){
         Adopter adopter = adopterService.signIn(body.get("email"), body.get("password"));
         if(adopter == null){

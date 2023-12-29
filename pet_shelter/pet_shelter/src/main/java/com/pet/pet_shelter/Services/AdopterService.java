@@ -13,7 +13,7 @@ import java.sql.SQLException;
 public class AdopterService {
     private Connection conn;
     private String username = "root";
-    private String password = "password";
+    private String password = "#mora951753132547698#";
     private String url = "jdbc:mysql://localhost:3306/mydb";
     AdopterService() throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.cj.jdbc.Driver");

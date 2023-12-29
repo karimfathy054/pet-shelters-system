@@ -61,7 +61,7 @@ export default function Navbar({ user }) {
                 <ul>
                     <li><Link to='/' className={styles.li}><FaHome />Home</Link></li>
                     <li><div id={styles.setting} className={styles.li} onClick={handleSetting}><IoIosSettings />Setting</div></li>
-                    <li><div id={styles.CreateStaff} className={styles.li} onClick={handleCreateStaff}><FaUserPlus />Create Staff</div></li>
+                    {user.adopter ? (<></>) : (<li><div id={styles.CreateStaff} className={styles.li} onClick={handleCreateStaff}><FaUserPlus />Create Staff</div></li>)}
                     {user.idAdmin ? (<>
                         <li><div id={styles.requests} className={styles.li} onClick={handleRequests}><FaCodePullRequest />Requests</div></li>
                         <li><div id={styles.admins} className={styles.li} onClick={handleAdmins}><MdOutlineAdminPanelSettings />Generate Admins</div></li>

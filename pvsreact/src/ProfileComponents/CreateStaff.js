@@ -22,9 +22,6 @@ export default function CreateStaff({ user }) {
     //                     .password(resultSet.getString("password"))
 
     const handleSubmit = (e) => {
-        console.log("qqqqqqqqqqqqqqqqqqqqqqqqqq")
-        console.log("f" + firstName)
-        console.log(shelterId)
         e.preventDefault();
         fetch('http://localhost:8080/staff/createStaff', {
             method: 'POST',

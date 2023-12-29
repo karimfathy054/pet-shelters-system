@@ -28,7 +28,7 @@ export default function Signup() {
     // const h
     const handleSubmit = (e) => {
         e.preventDefault();
-        fetch('http://localhost:8080/api/auth/register', {
+        fetch('http://localhost:8080/adopter/signUp', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -36,37 +36,33 @@ export default function Signup() {
             body: JSON.stringify({
                 email: email,
                 password: password,
-                userName: userName
+                firstName: firstName,
+                secondName: lastName,
+                address: address,
+                phone: phone
             }),
+        }).then(data => {
+            console.log(data)
+            if (data.status === 409) { window.alert("Account Aleady Exist") }
+            else if (data.status === 200) {
+                createUser();
+            }
         })
-            .then(response => response.json())
-            .then(data => {
-                createUser(data.token, email)
-            })
-            .catch(error => { console.error('Error creating user:', error); window.alert("Account Is Already Exist"); });
+            .catch(error => { console.error('Error creating user:', error); window.alert("Account Aleady Exist") });
 
     }
 
-    function createUser(token, email) {
-        let body = {
-            email: email
-        }
-        console.log(body)
-        fetch('http://localhost:8080/api/getUserByEmail', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: "Bearer " + token
-            },
-            body: JSON.stringify(body),
-        })
-            .then(response => response.json())
-            .then(data => {
-                handleLogin({
-
-                });
-                navigate('/', { replace: true });
-            })
+    function createUser() {
+        handleLogin({
+            email: email,
+            password: password,
+            firstName: firstName,
+            lastName: lastName,
+            address: address,
+            phone: phone,
+            adopter: true
+        });
+        navigate('/', { replace: true });
     }
     return (
         <>
