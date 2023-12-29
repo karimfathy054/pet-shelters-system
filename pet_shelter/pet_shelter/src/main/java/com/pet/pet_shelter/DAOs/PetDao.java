@@ -34,8 +34,8 @@ public class PetDao {
                 pet.getBehavior(),
                 pet.getDescription(),
                 pet.getHouseTraining(),
-                pet.getNeuturingStatus(),
-                pet.getShelterID(),
+                pet.getNeuteringStatus(),
+                pet.getShelterId(),
                 pet.getJoinDate()
                 );
     }
@@ -100,8 +100,8 @@ public class PetDao {
             .behavior(rs.getString("behavior"))
             .description(rs.getString("description"))
             .houseTraining(HouseTraining.valueOf(rs.getString("house_training")))
-            .neuturingStatus(rs.getBoolean("neuturing_status"))
-            .shelterID(rs.getLong("shelter_id"))
+            .neuteringStatus(rs.getBoolean("neuturing_status"))
+            .shelterId(rs.getLong("shelter_id"))
             .joinDate(rs.getDate("join_date"))
             .age(calculateAge(rs.getDate("date_of_birth"))).build();
         }

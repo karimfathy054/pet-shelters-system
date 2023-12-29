@@ -1,11 +1,13 @@
 package com.pet.pet_shelter.Controllers;
 
 import com.pet.pet_shelter.DTOs.Adopter;
+import com.pet.pet_shelter.DTOs.AdoptionApplication;
 import com.pet.pet_shelter.Services.AdopterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -41,5 +43,21 @@ public class AdopterController {
             return ResponseEntity.ok().body(staff);
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/getApplications/{id}")
+    public ResponseEntity<List<AdoptionApplication>> getApplications(@PathVariable long id){
+        List<AdoptionApplication> list = adopterService.getAllApplications(id);
+        if(list == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok().body(list);
+    }
+
+    @PostMapping("/addApplication")
+    public ResponseEntity<String> addApplication(@RequestBody Map<String, Long> body){
+        String response = adopterService.addApplication(body.get("petId"), body.get("adopterId"));
+        if(response.equals("Application Submitted!!")){
+            return ResponseEntity.ok().body(response);
+        }
+        return ResponseEntity.status(409).body(response);
     }
 }

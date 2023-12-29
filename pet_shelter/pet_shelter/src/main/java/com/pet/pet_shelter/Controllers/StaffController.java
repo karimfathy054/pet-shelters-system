@@ -76,14 +76,7 @@ public class StaffController {
         return ResponseEntity.status(409).body(response);
     }
 
-    @PostMapping("/addApplication")
-    public ResponseEntity<String> addApplication(@RequestBody Map<String, Long> body){
-        String response = staffService.addApplication(body.get("petId"), body.get("adopterId"));
-        if(response.equals("Application Submitted!!")){
-            return ResponseEntity.ok().body(response);
-        }
-        return ResponseEntity.status(409).body(response);
-    }
+
 
 
 

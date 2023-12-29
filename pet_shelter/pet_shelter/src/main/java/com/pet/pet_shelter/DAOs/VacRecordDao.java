@@ -15,6 +15,6 @@ public class VacRecordDao {
     void addVaccinationRecord(VaccinationRecord vac){
         jdbc.update("insert into vaccinated (vaccine,pet_id) values(?,?)",
                 vac.getVaccine(),
-                vac.getPetID());
+                vac.getPetId());
     }
 }

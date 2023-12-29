@@ -23,7 +23,7 @@ public class Pet {
     String behavior;
     String description;
     HouseTraining houseTraining;
-    Boolean neuturingStatus;
-    Long shelterID;
+    Boolean neuteringStatus;
+    Long shelterId;
     Date joinDate;
 }
