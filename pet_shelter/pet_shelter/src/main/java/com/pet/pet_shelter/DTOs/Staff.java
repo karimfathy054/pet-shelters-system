@@ -12,7 +12,9 @@ public class Staff {
     int id;
     String firstname;
     String lastName;
-    Role role;
     int shelterID;
-
+    Boolean isAdmin;
+    String phone;
+    String email;
+    String password;
 }

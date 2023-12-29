@@ -12,11 +12,20 @@ public class StaffDao {
     JdbcTemplate jdbc;
 
     void addStaffMember(Staff member){
-        jdbc.update("insert into staff (idstaff,first_name,last_name,role,shelter_idshelter) values(?,?,?,?,?)",
+        jdbc.update("""
+                insert into staff (staff_id,first_name,last_name,shelter_id,is_admin,phone,email,password)
+                values(?,?,?,?,?,?,?,?)
+                """,
                 member.getId(),
                 member.getFirstname(),
                 member.getLastName(),
-                member.getRole(),
-                member.getShelterID());
+                member.getShelterID(),
+                member.getIsAdmin(),
+                member.getPhone(),
+                member.getEmail(),
+                member.getPassword()
+                );
     }
+
+    
 }

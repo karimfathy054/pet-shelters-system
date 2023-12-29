@@ -9,8 +9,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AdoptionApplication {
-    int id;
+    Long id;
     ApplicationStatus status;
-    int petID;
-    int adopterID;
+    Long petID;
+    Long adopterID;
 }

@@ -11,5 +11,5 @@ import lombok.Setter;
 public class Document {
     String path;
     DocType type;
-    int petID;
+    Long petID;
 }

@@ -1,5 +1,7 @@
 package com.pet.pet_shelter.DTOs;
 
+import java.sql.Timestamp;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,9 +10,13 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Adopter {
-    int id;
+    Long id;
     String firstName;
-    String lastName;
-    String address;
+    String secondName;
     String phone;
+    String address;
+    String email;
+    String password;
+    Timestamp joinDate;
+    
 }

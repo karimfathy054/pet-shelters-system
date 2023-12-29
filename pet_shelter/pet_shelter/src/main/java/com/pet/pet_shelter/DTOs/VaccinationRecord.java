@@ -8,6 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class VaccinationRecord {
-    int petID;
-    String Vaccine;
+    String vaccine;
+    Long petID;
 }
