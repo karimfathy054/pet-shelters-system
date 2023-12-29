@@ -18,16 +18,16 @@ public class DocumentDao {
     @Autowired
     JdbcTemplate jdbc;
 
-    void addDoc(Document doc){
-        jdbc.update("insert into documents (path,type,pet_id) values (?,?,?)",
+    public int addDoc(Document doc){
+        return jdbc.update("insert into documents (path,type,pet_id) values (?,?,?)",
                 doc.getPath(),
                 doc.getType(),
                 doc.getPetID()
             );
     }
 
-    List<Document> getDocumentsForPet(Long petId){
-        return jdbc.query("select * from documents where documents.pet_id = ?", new DocRowMapper(), petId);
+    public List<Document> getDocumentsForPet(Long petId){
+        return jdbc.query("select path , type from documents where documents.pet_id = ?", new DocRowMapper(), petId);
     }
 
     static class DocRowMapper implements RowMapper<Document>{
