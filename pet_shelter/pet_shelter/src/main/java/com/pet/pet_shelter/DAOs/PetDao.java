@@ -24,8 +24,7 @@ public class PetDao {
     JdbcTemplate jdbc;
 
     void addPet(Pet pet){
-        jdbc.update("insert into pet (idpet,name,species,breed,date_of_birth,gender,health_status,behavior,description,house_training,neuturing_status,shelter_id,join_date) values (?,?,?,?,?,?,?,?,?,?,?,?,?)",
-                pet.getId(),
+        jdbc.update("insert into pet (name,species,breed,date_of_birth,gender,health_status,behavior,description,house_training,neuturing_status,shelter_id,join_date) values (?,?,?,?,?,?,?,?,?,?,?,?)",
                 pet.getName(),
                 pet.getSpecies(),
                 pet.getBreed(),
@@ -102,7 +101,7 @@ public class PetDao {
             .description(rs.getString("description"))
             .houseTraining(HouseTraining.valueOf(rs.getString("house_training")))
             .neuturingStatus(rs.getBoolean("neuturing_status"))
-            .shelterID(rs.getInt("shelter_id"))
+            .shelterID(rs.getLong("shelter_id"))
             .joinDate(rs.getDate("join_date"))
             .age(calculateAge(rs.getDate("date_of_birth"))).build();
         }

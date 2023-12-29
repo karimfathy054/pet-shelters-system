@@ -13,10 +13,9 @@ public class StaffDao {
 
     void addStaffMember(Staff member){
         jdbc.update("""
-                insert into staff (staff_id,first_name,last_name,shelter_id,is_admin,phone,email,password)
-                values(?,?,?,?,?,?,?,?)
+                insert into staff (first_name,last_name,shelter_id,is_admin,phone,email,password)
+                values(?,?,?,?,?,?,?)
                 """,
-                member.getId(),
                 member.getFirstname(),
                 member.getLastName(),
                 member.getShelterID(),

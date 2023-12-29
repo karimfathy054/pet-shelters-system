@@ -19,8 +19,7 @@ public class ShelterDao {
     JdbcTemplate jdbc;
 
     void addShelter(Shelter shelter){
-        jdbc.update("insert into shelter (idshelter,name,location,phone,manager_id) values (?,?,?,?,?)",
-                shelter.getId(),
+        jdbc.update("insert into shelter (name,location,phone,manager_id) values (?,?,?,?)",
                 shelter.getName(),
                 shelter.getLocation(),
                 shelter.getPhoneNumber(),

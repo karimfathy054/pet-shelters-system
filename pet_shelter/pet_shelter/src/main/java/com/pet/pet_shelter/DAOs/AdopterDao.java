@@ -18,11 +18,10 @@ public class AdopterDao {
     private JdbcTemplate jdbc;
 
     void addAdopter(Adopter adopter){
-        jdbc.update("insert into adopter (email,password,join_date,adopter_id,firstName,secondName,phone,address) values(?,?,?,?,?,?,?,?))",
+        jdbc.update("insert into adopter (email,password,join_date,firstName,secondName,phone,address) values(?,?,?,?,?,?,?))",
                 adopter.getEmail(),
                 adopter.getPassword(),
                 adopter.getJoinDate(),
-                adopter.getId(),
                 adopter.getFirstName(),
                 adopter.getSecondName(),
                 adopter.getPhone(),

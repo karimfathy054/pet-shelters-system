@@ -21,10 +21,9 @@ public class AdoptionApplicationDao {
 
     void addApplication(AdoptionApplication app){
         jdbc.update("""
-                insert into adoptiona_application (app_id,status,pet_id,adopter_id)
-                values(?,?,?,?)
+                insert into adoptiona_application (status,pet_id,adopter_id)
+                values(?,?,?)
                 """,
-                app.getId(),
                 app.getStatus(),
                 app.getPetID(),
                 app.getAdopterID()
