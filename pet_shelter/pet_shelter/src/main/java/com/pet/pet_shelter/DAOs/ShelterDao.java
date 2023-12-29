@@ -18,22 +18,37 @@ public class ShelterDao {
     @Autowired
     JdbcTemplate jdbc;
 
-    void addShelter(Shelter shelter){
-        jdbc.update("insert into shelter (name,location,phone,manager_id) values (?,?,?,?)",
+    public void addShelter(Shelter shelter){
+        jdbc.update("insert into shelter (name,location,phone,manager_id) values (?,?,?,?) ;",
                 shelter.getName(),
                 shelter.getLocation(),
                 shelter.getPhoneNumber(),
                 shelter.getManagerId());
     }
 
-    Optional<Shelter> getShelterById(int id){
-        List<Shelter> res = jdbc.query("select * from shelter where shelter.idshelter = ?", new ShelterRowMapper(),id);
+    public Optional<Shelter> getShelterById(int id){
+        List<Shelter> res = jdbc.query("select * from shelter where shelter.idshelter = ? ;", new ShelterRowMapper(),id);
         return res.stream().findFirst();
     }
-    Optional<Shelter> getShelterByManager(int id){
-        List<Shelter> res = jdbc.query("select * from shelter where shelter.manager_id = ?", new ShelterRowMapper(),id);
+    public Optional<Shelter> getShelterByManagerId(int id){
+        List<Shelter> res = jdbc.query("select * from shelter where shelter.manager_id = ? ;", new ShelterRowMapper(),id);
         return res.stream().findFirst();
     }
+    public Optional<Shelter> getShelterByManagerEmail(String email){
+        List<Shelter> res = jdbc.query("""
+            SELECT s.idshelter , s.name , s.location , s.phone , s.manager_id
+            FROM shelter s
+            JOIN (SELECT m.staff_id , m.email FROM staff m)
+            ON s.manager_id = m.staff_id
+            WHERE m.email = ?;
+        """, new ShelterRowMapper(),email);
+        return res.stream().findFirst();
+    }
+
+    public int deleteShelter(Integer shelterId){
+        return jdbc.update("DELETE FROM shelter WHERE shelter.shelter_id = ?", shelterId);
+    }
+
 
     static class ShelterRowMapper implements RowMapper<Shelter>{
 
@@ -44,7 +59,8 @@ public class ShelterDao {
             .name(rs.getString("name"))
             .location(rs.getString("location"))
             .phoneNumber(rs.getString("phone"))
-            .managerId(rs.getInt("manager_id")).build();
+            .managerId(rs.getInt("manager_id"))
+            .build();
         }
 
     }

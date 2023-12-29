@@ -27,12 +27,12 @@ public class AdopterService {
             ResultSet resultSet = conn.prepareStatement(getUserQuery).executeQuery();
             if(resultSet.next()){
                 return Adopter.builder()
-                        .adopterId(resultSet.getInt("adopter_id"))
+                        .id(resultSet.getLong("adopter_id"))
                         .phone(resultSet.getString("phone"))
                         .address(resultSet.getString("address"))
                         .firstName(resultSet.getString("firstName"))
                         .secondName(resultSet.getString("secondName"))
-                        .joinDate(resultSet.getDate("join_date"))
+                        .joinDate(resultSet.getTimestamp("join_date"))
                         .email(resultSet.getString("email"))
                         .password(resultSet.getString("password"))
                         .build();
@@ -70,8 +70,8 @@ public class AdopterService {
                 return Adopter.builder()
                         .email(resultSet.getString("email"))
                         .password(resultSet.getString("password"))
-                        .joinDate(resultSet.getDate("join_date"))
-                        .adopterId(resultSet.getInt("adopter_id"))
+                        .joinDate(resultSet.getTimestamp("join_date"))
+                        .id(resultSet.getLong("adopter_id"))
                         .firstName(resultSet.getString("firstName"))
                         .secondName(resultSet.getString("secondName"))
                         .phone(resultSet.getString("phone"))

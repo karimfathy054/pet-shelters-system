@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Adopter {
-    Long id;
+    Long adopterId;
     String firstName;
     String secondName;
     String phone;

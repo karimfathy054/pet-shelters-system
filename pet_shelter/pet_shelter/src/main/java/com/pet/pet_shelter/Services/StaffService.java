@@ -24,11 +24,11 @@ public class StaffService {
             ResultSet resultSet = conn.prepareStatement(getUserQuery).executeQuery();
             if(resultSet.next()){
                 return Staff.builder()
-                        .staffId(resultSet.getInt("staff_id"))
-                        .firstName(resultSet.getString("first_name"))
+                        .id(resultSet.getInt("staff_id"))
+                        .firstname(resultSet.getString("first_name"))
                         .lastName(resultSet.getString("last_name"))
-                        .shelterId(resultSet.getInt("shelter_id"))
-                        .idAdmin(resultSet.getBoolean("is_admin"))
+                        .shelterID(resultSet.getInt("shelter_id"))
+                        .isAdmin(resultSet.getBoolean("is_admin"))
                         .phone(resultSet.getString("phone"))
                         .email(resultSet.getString("email"))
                         .password(resultSet.getString("password"))
@@ -47,11 +47,11 @@ public class StaffService {
             ResultSet resultSet = conn.prepareStatement(getUserQuery).executeQuery();
             if(resultSet.next()){
                 return Staff.builder()
-                        .staffId(resultSet.getInt("staff_id"))
-                        .firstName(resultSet.getString("first_name"))
+                        .id(resultSet.getInt("staff_id"))
+                        .firstname(resultSet.getString("first_name"))
                         .lastName(resultSet.getString("last_name"))
-                        .shelterId(resultSet.getInt("shelter_id"))
-                        .idAdmin(resultSet.getBoolean("is_admin"))
+                        .shelterID(resultSet.getInt("shelter_id"))
+                        .isAdmin(resultSet.getBoolean("is_admin"))
                         .phone(resultSet.getString("phone"))
                         .email(resultSet.getString("email"))
                         .password(resultSet.getString("password"))
@@ -69,7 +69,7 @@ public class StaffService {
             ResultSet resultSet = conn.prepareStatement(getUserQuery).executeQuery();
             if(resultSet.next()){
                 return Shelter.builder()
-                        .shelterId(resultSet.getInt("idshelter"))
+                        .id(resultSet.getInt("idshelter"))
                         .location(resultSet.getString("location"))
                         .name(resultSet.getString("name"))
                         .phoneNumber(resultSet.getString("phone"))
@@ -102,16 +102,16 @@ public class StaffService {
     }
     public String createStaff(Staff staff){
         String shelterId;
-        if(staff.getShelterId()==0){
+        if(staff.getShelterID()==0){
             shelterId = "null";
         }else{
-            shelterId = Integer.toString(staff.getShelterId());
+            shelterId = Integer.toString(staff.getShelterID());
         }
         String addStaff = String.format(
                 "INSERT INTO " +
                         "staff(first_name, last_name, is_admin, phone, email, password, shelter_id) " +
                         "VALUES('%s', '%s', %b, '%s', '%s', '%s',%s);"
-                , staff.getFirstName(), staff.getLastName(), staff.isIdAdmin()
+                , staff.getFirstname(), staff.getLastName(), staff.getIsAdmin()
                 , staff.getPhone(), staff.getEmail(), staff.getPassword(), shelterId
         );
         System.out.println("Add Staff QUERY: " + addStaff);
@@ -172,7 +172,7 @@ public class StaffService {
                         "UPDATE staff " +
                                 "SET shelter_id = %s " +
                                 "WHERE email = %s;"
-                        ,shelter.getShelterId() ,email);
+                        ,shelter.getId() ,email);
             }else{
                 return "Shelter not found";
             }
@@ -190,17 +190,17 @@ public class StaffService {
 
     public String addPet(Pet pet) {
         String shelterId;
-        if(pet.getShelterId()==0){
+        if(pet.getShelterID()==0){
             shelterId = "null";
         }else{
-            shelterId = Integer.toString(pet.getShelterId());
+            shelterId = Integer.toString(pet.getShelterID());
         }
         String addPetQuery =
                 String.format("INSERT INTO PET(name, species, breed, date_of_birth, gender, health_status, behavior, " +
                         "description, house_training, neutering_status, shelter_id, join_date)" +
                         "VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %b, %s, '%s')"
                 , pet.getName(), pet.getSpecies(), pet.getBreed(), pet.getBirthDate().toString(), pet.getGender(), pet.getHealthStatus()
-                ,pet.getBehavior(), pet.getDescription(), pet.getTrainingStatus(), pet.isNeuteringStatus(), shelterId, new Date(System.currentTimeMillis()).toString());
+                ,pet.getBehavior(), pet.getDescription(), pet.getHouseTraining(), pet.getNeuturingStatus(), shelterId, new Date(System.currentTimeMillis()).toString());
         System.out.println("Add Pet Query = " + addPetQuery);
         try{
             conn.prepareStatement(addPetQuery).execute();
@@ -247,11 +247,11 @@ public class StaffService {
             ResultSet resultSet = conn.prepareStatement(getStaffQuery).executeQuery();
             if(resultSet.next()){
                 return Staff.builder()
-                        .staffId(resultSet.getInt("staff_id"))
-                        .firstName(resultSet.getString("first_name"))
+                        .id(resultSet.getInt("staff_id"))
+                        .firstname(resultSet.getString("first_name"))
                         .lastName(resultSet.getString("last_name"))
-                        .shelterId(resultSet.getInt("shelter_id"))
-                        .idAdmin((resultSet.getBoolean("is_admin")))
+                        .shelterID(resultSet.getInt("shelter_id"))
+                        .isAdmin((resultSet.getBoolean("is_admin")))
                         .phone(resultSet.getString("phone"))
                         .email(resultSet.getString("email"))
                         .password(resultSet.getString("password"))
