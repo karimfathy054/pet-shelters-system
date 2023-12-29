@@ -52,7 +52,7 @@ public class StaffController {
     }
     @PostMapping("/associateStaffToShelter")
     public ResponseEntity<String> associateStaffToShelter(@RequestBody Map<String,String> body){
-        String response = staffService.associateStaffToShelter(body.get("email"), Integer.parseInt(body.get("shelterId")));
+        String response = staffService.associateStaffToShelter(body.get("email"), (body.get("shelterName")));
         if(response.equals("Staff become in the shelter"))  return ResponseEntity.ok().body(response);
         else return ResponseEntity.status(409).body(response);
     }

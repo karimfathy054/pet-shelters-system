@@ -70,6 +70,25 @@ public class StaffService {
             return null;
         }
     }
+    private Shelter getShelterByName(String shelterName) {
+        String getUserQuery = "SELECT * FROM shelter WHERE name = '"+ shelterName + "';";
+        try{
+            ResultSet resultSet = conn.prepareStatement(getUserQuery).executeQuery();
+            if(resultSet.next()){
+                return Shelter.builder()
+                        .id(resultSet.getInt("idshelter"))
+                        .location(resultSet.getString("location"))
+                        .name(resultSet.getString("name"))
+                        .phoneNumber(resultSet.getString("phone"))
+                        .managerId(Integer.parseInt(resultSet.getString("manager_id")))
+                        .build();
+            }
+            return null;
+        }catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
     private Shelter getShelterById(int id){
         String getUserQuery = "SELECT * FROM shelter WHERE id = '"+ id + "';";
         try{
@@ -89,21 +108,7 @@ public class StaffService {
             return null;
         }
     }
-//    private AdoptionApplication getApplicationById(Long id){
-//        String getUserQuery = "SELECT * FROM adoption_application WHERE id = '"+ id + "';";
-//        try{
-//            ResultSet resultSet = conn.prepareStatement(getUserQuery).executeQuery();
-//            if(resultSet.next()){
-//                return AdoptionApplication.builder()
-//                        .adopterId(resultSet.getInt("")
-//                        .build();
-//            }
-//            return null;
-//        }catch (SQLException e){
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
+
     public Staff signIn(String email, String password){
         return getStaff(email, password);
     }
@@ -169,16 +174,16 @@ public class StaffService {
             return e.getMessage();
         }
     }
-    public String associateStaffToShelter(String email, int shelterId) {
+    public String associateStaffToShelter(String email, String ShelterName) {
         String associate = "";
         Staff staff = getStaffByEmail(email);
-        Shelter shelter = getShelterById(shelterId);
+        Shelter shelter = getShelterByName(ShelterName);
         if(staff != null){
             if(shelter != null){
                 associate = String.format(
                         "UPDATE staff " +
                                 "SET shelter_id = %s " +
-                                "WHERE email = %s;"
+                                "WHERE email = '%s';"
                         ,shelter.getId() ,email);
             }else{
                 return "Shelter not found";
@@ -194,6 +199,8 @@ public class StaffService {
             return e.getMessage();
         }
     }
+
+
 
     public String addPet(Pet pet) {
         String shelterId;
