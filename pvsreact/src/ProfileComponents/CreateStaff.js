@@ -24,7 +24,7 @@ export default function CreateStaff({ user }) {
     const handleSubmit = (e) => {
         console.log("qqqqqqqqqqqqqqqqqqqqqqqqqq")
         console.log("f" + firstName)
-        console.log(lastName)
+        console.log(shelterId)
         e.preventDefault();
         fetch('http://localhost:8080/staff/createStaff', {
             method: 'POST',
@@ -34,18 +34,18 @@ export default function CreateStaff({ user }) {
             body: JSON.stringify({
                 firstName: firstName,
                 lastName: lastName,
-                shelterID: shelterId,
+                shelterId: shelterId,
                 idAdmin: 0,
                 phone: phone,
                 email: email,
                 password: password
             }),
         })
-            .then(response => response.json())
             .then(data => {
                 console.log(data)
+                if (data.status === 409) { window.alert("Account Aleady Exist") }
             })
-            .catch(error => { console.error('Error creating user:', error); window.alert("Account Not Found Login") });
+            .catch(error => { console.error('Error creating user:', error); window.alert("Account Aleady Exist") });
     }
 
     return (
