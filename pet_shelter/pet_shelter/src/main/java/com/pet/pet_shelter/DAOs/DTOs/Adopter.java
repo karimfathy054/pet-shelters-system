@@ -1,4 +1,4 @@
-package com.pet.pet_shelter.DTOs;
+package com.pet.pet_shelter.DAOs.DTOs;
 
 import lombok.Builder;
 import lombok.Getter;

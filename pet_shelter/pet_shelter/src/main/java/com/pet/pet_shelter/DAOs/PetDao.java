@@ -1,6 +1,6 @@
 package com.pet.pet_shelter.DAOs;
 
-import com.pet.pet_shelter.DTOs.Pet;
+import com.pet.pet_shelter.DAOs.DTOs.Pet;
 import com.pet.pet_shelter.ENUMS.Gender;
 import com.pet.pet_shelter.ENUMS.HouseTraining;
 

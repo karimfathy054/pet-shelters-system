@@ -1,7 +1,7 @@
 package com.pet.pet_shelter.Controllers;
-import com.pet.pet_shelter.DTOs.Adopter;
-import com.pet.pet_shelter.DTOs.Pet;
-import com.pet.pet_shelter.DTOs.Staff;
+import com.pet.pet_shelter.DAOs.DTOs.Adopter;
+import com.pet.pet_shelter.DAOs.DTOs.Pet;
+import com.pet.pet_shelter.DAOs.DTOs.Staff;
 import com.pet.pet_shelter.Services.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
