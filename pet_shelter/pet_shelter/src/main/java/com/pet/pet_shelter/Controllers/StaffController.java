@@ -75,23 +75,14 @@ public class StaffController {
     }
 
 
-
-
-
-
-//    @PostMapping("/addApplication")
-//    public addApplication(){
-//
-//    }
-
-
-
-
-
-//    @PostMapping("/acceptApplication")
-//    public ResponseEntity<String> acceptApplication(@RequestBody Map<String, String> body){
-//        boolean status = Boolean.parseBoolean(body.get("status"));
-//        Long id = Long.valueOf(body.get("id"));
-//        String response = staffService.acceptApplication(status,id);
-//    }
+    @PostMapping("/acceptApplication")
+    public ResponseEntity<String> acceptApplication(@RequestBody Map<String, String> body){
+        String status = (body.get("status"));
+        Long id = Long.valueOf(body.get("id"));
+        String response = staffService.acceptApplication(status,id);
+        if(response.equals("Accept and Record Added!!")||response.equals("Rejected!!")){
+            return ResponseEntity.ok().body(response);
+        }
+        return ResponseEntity.status(409).body(response);
+    }
 }

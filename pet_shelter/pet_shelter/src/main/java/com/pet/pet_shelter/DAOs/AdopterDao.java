@@ -32,12 +32,12 @@ public class AdopterDao {
     }
 
     public Optional<Adopter> getAdopterByID(Long id){
-        List<Adopter>res =  jdbc.query("select email , password ,join_date ,adopter_id , firstName , secondName , phone ,address from adopter where adopter.adopter_id =?",new AdopterRowMapper(),id );
+        List<Adopter>res =  jdbc.query("select firstName ,secondName, phone,address,email ,password ,join_date , adopter_id from adopter where adopter.adopter_id =?",new AdopterRowMapper(),id );
         return res.stream().findFirst();
     }
 
     public Optional<Adopter> getAdopterBy(String email){
-        List<Adopter>res = jdbc.query("select email , password ,join_date ,adopter_id , firstName , secondName , phone ,address from adopter where adopter.email =?",new AdopterRowMapper(),email );
+        List<Adopter>res = jdbc.query("select firstName ,secondName,phone, address,email ,password ,join_date , adopter_id from adopter where adopter.email =?",new AdopterRowMapper(),email );
         return res.stream().findFirst();
     }
 
@@ -49,7 +49,7 @@ public class AdopterDao {
             .email(rs.getString("email"))
             .password(rs.getString("password"))
             .joinDate(rs.getTimestamp("join_date"))
-            .adopterId(rs.getLong("adopter_id"))
+             .adopterId(rs.getLong("adopter_id"))
             .firstName(rs.getString("firstName"))
             .secondName(rs.getString("secondName"))
             .phone(rs.getString("phone"))

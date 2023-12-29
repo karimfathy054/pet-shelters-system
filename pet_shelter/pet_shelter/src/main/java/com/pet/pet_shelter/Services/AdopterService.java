@@ -1,9 +1,12 @@
 package com.pet.pet_shelter.Services;
 
 
+import com.pet.pet_shelter.DAOs.NotificationDao;
 import com.pet.pet_shelter.DTOs.Adopter;
 import com.pet.pet_shelter.DTOs.AdoptionApplication;
+import com.pet.pet_shelter.DTOs.Notification;
 import com.pet.pet_shelter.ENUMS.ApplicationStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
@@ -16,8 +19,10 @@ import java.util.List;
 @Service
 public class AdopterService {
     private Connection conn;
-    private String username = "root";
-    private String password = "password";
+    @Autowired
+    NotificationDao notificationDao;
+    private String username = "scott";
+    private String password = "01223624409ABab@";
     private String url = "jdbc:mysql://localhost:3306/mydb";
     AdopterService() throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.cj.jdbc.Driver");
@@ -141,6 +146,21 @@ public class AdopterService {
         try{
             conn.prepareStatement(addApplicationQuery).execute();
             return "Application Submitted!!";
+        }catch (SQLException e) {
+            e.printStackTrace();
+            return e.getMessage();
+        }
+    }
+    public List<Notification> getAllNotification(Long id) {
+
+        return  notificationDao.getNotificationsforUser(id);
+    }
+
+    public String deleteStaff(Long id) {
+        String addApplicationQuery = "DELETE FROM app_notify WHERE app_id = "+id+";";
+        try{
+            conn.prepareStatement(addApplicationQuery).execute();
+            return "Notification Deleted!!";
         }catch (SQLException e) {
             e.printStackTrace();
             return e.getMessage();

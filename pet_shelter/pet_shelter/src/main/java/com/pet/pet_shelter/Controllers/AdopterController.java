@@ -2,6 +2,7 @@ package com.pet.pet_shelter.Controllers;
 
 import com.pet.pet_shelter.DTOs.Adopter;
 import com.pet.pet_shelter.DTOs.AdoptionApplication;
+import com.pet.pet_shelter.DTOs.Notification;
 import com.pet.pet_shelter.Services.AdopterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -60,4 +61,18 @@ public class AdopterController {
         }
         return ResponseEntity.status(409).body(response);
     }
+    //----------------------------------------
+    @GetMapping("/getNotification/{id}")
+    public  ResponseEntity<List<Notification>> getNotification(@PathVariable Long id){
+        List<Notification> list = adopterService.getAllNotification(id);
+        if(list == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok().body(list);
+    }
+    @DeleteMapping("/deleteNotification/{id}")
+    public ResponseEntity<String> deleteNotification(@PathVariable Long id){
+        String response = adopterService.deleteStaff(id);
+        if(response.equals("Notification Deleted!!"))  return ResponseEntity.ok().body(response);
+        else return ResponseEntity.status(404).body(response);
+    }
+
 }
