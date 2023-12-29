@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 @Builder
 @Getter
@@ -24,6 +25,6 @@ public class Pet {
     String description;
     HouseTraining houseTraining;
     Boolean neuteringStatus;
-    Long shelterId;
-    Date joinDate;
+    long shelterId;
+    Timestamp joinDate;
 }

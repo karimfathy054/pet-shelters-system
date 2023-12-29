@@ -26,7 +26,7 @@ public class AdoptionApplicationDao {
                 """,
                 app.getStatus(),
                 app.getPetID(),
-                app.getAdopterID()
+                app.getAdopterId()
                 );
     }
 
@@ -46,8 +46,8 @@ public class AdoptionApplicationDao {
         @Override
         public AdoptionApplication mapRow(ResultSet rs, int rowNum) throws SQLException {
             return AdoptionApplication.builder()
-            .adopterID(rs.getLong("adopter_id"))
-            .id(rs.getLong("app_id"))
+            .adopterId(rs.getLong("adopter_id"))
+            .appId(rs.getLong("app_id"))
             .status(Enum.valueOf(ApplicationStatus.class,rs.getString("status")))
             .petID(rs.getLong("pet_id"))
             .build();

@@ -18,7 +18,7 @@ public class AdopterController {
     @Autowired
     AdopterService adopterService;
 
-    @GetMapping("/signIn")
+    @PostMapping("/signIn")
     public ResponseEntity<Adopter> signIn(@RequestBody Map<String, String> body){
         Adopter adopter = adopterService.signIn(body.get("email"), body.get("password"));
         if(adopter == null){
@@ -54,7 +54,7 @@ public class AdopterController {
 
     @PostMapping("/addApplication")
     public ResponseEntity<String> addApplication(@RequestBody Map<String, Long> body){
-        String response = adopterService.addApplication(body.get("petId"), body.get("adopterId"));
+        String response = adopterService.addApplication(body.get("petID"), body.get("adopterId"));
         if(response.equals("Application Submitted!!")){
             return ResponseEntity.ok().body(response);
         }

@@ -102,7 +102,7 @@ public class PetDao {
             .houseTraining(HouseTraining.valueOf(rs.getString("house_training")))
             .neuteringStatus(rs.getBoolean("neuturing_status"))
             .shelterId(rs.getLong("shelter_id"))
-            .joinDate(rs.getDate("join_date"))
+            .joinDate(rs.getTimestamp("join_date"))
             .age(calculateAge(rs.getDate("date_of_birth"))).build();
         }
         

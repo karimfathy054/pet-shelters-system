@@ -36,7 +36,7 @@ public class AdopterService {
                         .address(resultSet.getString("address"))
                         .firstName(resultSet.getString("firstName"))
                         .secondName(resultSet.getString("secondName"))
-                        .joinDate(resultSet.getDate("join_date"))
+                        .joinDate(resultSet.getTimestamp("join_date"))
                         .email(resultSet.getString("email"))
                         .password(resultSet.getString("password"))
                         .build();
@@ -74,7 +74,7 @@ public class AdopterService {
                 return Adopter.builder()
                         .email(resultSet.getString("email"))
                         .password(resultSet.getString("password"))
-                        .joinDate(resultSet.getDate("join_date"))
+                        .joinDate(resultSet.getTimestamp("join_date"))
                         .adopterId(resultSet.getInt("adopter_id"))
                         .firstName(resultSet.getString("firstName"))
                         .secondName(resultSet.getString("secondName"))
@@ -96,7 +96,7 @@ public class AdopterService {
                 return Adopter.builder()
                         .email(resultSet.getString("email"))
                         .password(resultSet.getString("password"))
-                        .joinDate(resultSet.getDate("join_date"))
+                        .joinDate(resultSet.getTimestamp("join_date"))
                         .adopterId(resultSet.getInt("adopter_id"))
                         .firstName(resultSet.getString("firstName"))
                         .secondName(resultSet.getString("secondName"))
@@ -120,7 +120,7 @@ public class AdopterService {
             while(resultSet.next()){
                 AdoptionApplication application =  AdoptionApplication.builder()
                         .appId(resultSet.getInt("app_id"))
-                        .status(ApplicationStatus.valueOf(resultSet.getString("status").toUpperCase()))
+                        .status(ApplicationStatus.valueOf(resultSet.getString("status")))
                         .petID(resultSet.getLong("pet_id"))
                         .adopterId(resultSet.getLong("adopter_id"))
                         .build();

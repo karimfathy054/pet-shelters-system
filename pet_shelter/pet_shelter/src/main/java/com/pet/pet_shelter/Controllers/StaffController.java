@@ -1,9 +1,7 @@
 package com.pet.pet_shelter.Controllers;
 import com.pet.pet_shelter.DTOs.Adopter;
-import com.pet.pet_shelter.DTOs.AdoptionApplication;
 import com.pet.pet_shelter.DTOs.Pet;
 import com.pet.pet_shelter.DTOs.Staff;
-import com.pet.pet_shelter.Services.RequestService;
 import com.pet.pet_shelter.Services.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -40,9 +38,9 @@ public class StaffController {
         }
         return ResponseEntity.notFound().build();
     }
-    @PostMapping("/makeManager")
-    public ResponseEntity<String> makeManager(@RequestBody Map<String,String> body){
-            String response = staffService.makeManager(body.get("email"));
+    @PostMapping("/makeAdmin")
+    public ResponseEntity<String> makeAdmin(@RequestBody Map<String,String> body){
+            String response = staffService.makeAdmin(body.get("email"));
         if(response.equals("Role Changed"))  return ResponseEntity.ok().body(response);
         else return ResponseEntity.status(409).body(response);
     }

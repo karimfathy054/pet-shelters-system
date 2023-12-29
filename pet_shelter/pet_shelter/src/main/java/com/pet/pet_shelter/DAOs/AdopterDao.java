@@ -49,7 +49,7 @@ public class AdopterDao {
             .email(rs.getString("email"))
             .password(rs.getString("password"))
             .joinDate(rs.getTimestamp("create_time"))
-            .id(rs.getLong("adopter_id"))
+            .adopterId(rs.getLong("adopter_id"))
             .firstName(rs.getString("firstName"))
             .secondName(rs.getString("secondName"))
             .phone(rs.getString("phone"))
