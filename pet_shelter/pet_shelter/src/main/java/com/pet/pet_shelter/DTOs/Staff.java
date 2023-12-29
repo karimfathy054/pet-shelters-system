@@ -1,18 +1,20 @@
 package com.pet.pet_shelter.DTOs;
 
 import com.pet.pet_shelter.ENUMS.Role;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Builder
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Staff {
-    int id;
-    String firstname;
+    int staffId;
+    String firstName;
     String lastName;
-    Role role;
+    boolean idAdmin;
     int shelterID;
-
+    String phone;
+    String email;
+    String password;
 }
