@@ -12,5 +12,5 @@ public class AdoptionApplication {
     int id;
     ApplicationStatus status;
     int petID;
-    int adopterID;
+    int adopterId;
 }

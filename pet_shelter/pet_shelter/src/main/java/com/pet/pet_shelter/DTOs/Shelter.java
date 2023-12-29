@@ -8,9 +8,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Shelter {
-    int id;
+    int shelterId;
     String name;
     String location;
     String phoneNumber;
-    int manager_id;
+    int managerId;
 }

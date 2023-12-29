@@ -21,7 +21,7 @@ public class Pet {
     String healthStatus;
     String behavior;
     String description;
-    int shelterID;
+    int shelterId;
     HouseTraining trainingStatus;
     boolean neuteringStatus;
     Date joinDate;

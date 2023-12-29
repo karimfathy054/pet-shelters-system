@@ -1,6 +1,5 @@
 package com.pet.pet_shelter.DTOs;
 
-import com.pet.pet_shelter.ENUMS.Role;
 import lombok.*;
 
 @Builder
@@ -13,7 +12,7 @@ public class Staff {
     String firstName;
     String lastName;
     boolean idAdmin;
-    int shelterID;
+    int shelterId;
     String phone;
     String email;
     String password;

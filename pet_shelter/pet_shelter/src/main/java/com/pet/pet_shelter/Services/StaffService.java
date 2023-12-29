@@ -1,13 +1,13 @@
 package com.pet.pet_shelter.Services;
 
+import com.pet.pet_shelter.DTOs.AdoptionApplication;
+import com.pet.pet_shelter.DTOs.Pet;
 import com.pet.pet_shelter.DTOs.Shelter;
 import com.pet.pet_shelter.DTOs.Staff;
 import org.springframework.stereotype.Service;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+
 @Service
 public class StaffService {
 
@@ -29,7 +29,7 @@ public class StaffService {
                         .staffId(resultSet.getInt("staff_id"))
                         .firstName(resultSet.getString("first_name"))
                         .lastName(resultSet.getString("last_name"))
-                        .shelterID(resultSet.getInt("shelter_id"))
+                        .shelterId(resultSet.getInt("shelter_id"))
                         .idAdmin(resultSet.getBoolean("is_admin"))
                         .phone(resultSet.getString("phone"))
                         .email(resultSet.getString("email"))
@@ -52,7 +52,7 @@ public class StaffService {
                         .staffId(resultSet.getInt("staff_id"))
                         .firstName(resultSet.getString("first_name"))
                         .lastName(resultSet.getString("last_name"))
-                        .shelterID(resultSet.getInt("shelter_id"))
+                        .shelterId(resultSet.getInt("shelter_id"))
                         .idAdmin(resultSet.getBoolean("is_admin"))
                         .phone(resultSet.getString("phone"))
                         .email(resultSet.getString("email"))
@@ -71,11 +71,11 @@ public class StaffService {
             ResultSet resultSet = conn.prepareStatement(getUserQuery).executeQuery();
             if(resultSet.next()){
                 return Shelter.builder()
-                        .id(resultSet.getInt("idshelter"))
+                        .shelterId(resultSet.getInt("idshelter"))
                         .location(resultSet.getString("location"))
                         .name(resultSet.getString("name"))
                         .phoneNumber(resultSet.getString("phone"))
-                        .manager_id(Integer.parseInt(resultSet.getString("manager_id")))
+                        .managerId(Integer.parseInt(resultSet.getString("manager_id")))
                         .build();
             }
             return null;
@@ -84,25 +84,39 @@ public class StaffService {
             return null;
         }
     }
+//    private AdoptionApplication getApplicationById(Long id){
+//        String getUserQuery = "SELECT * FROM adoption_application WHERE id = '"+ id + "';";
+//        try{
+//            ResultSet resultSet = conn.prepareStatement(getUserQuery).executeQuery();
+//            if(resultSet.next()){
+//                return AdoptionApplication.builder()
+//                        .adopterId(resultSet.getInt("")
+//                        .build();
+//            }
+//            return null;
+//        }catch (SQLException e){
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
     public Staff signIn(String email, String password){
         return getStaff(email, password);
     }
     public String createStaff(Staff staff){
-        //System.out.println("staff.getShelterID() = " + staff.getShelterID());
         String shelterId;
-        if(staff.getShelterID()==0){
+        if(staff.getShelterId()==0){
             shelterId = "null";
         }else{
-            shelterId = Integer.toString(staff.getShelterID());
+            shelterId = Integer.toString(staff.getShelterId());
         }
         String addStaff = String.format(
                 "INSERT INTO " +
                         "staff(first_name, last_name, is_admin, phone, email, password, shelter_id) " +
-                        "WHERE"
+                        "VALUES('%s', '%s', %b, '%s', '%s', '%s',%s);"
                 , staff.getFirstName(), staff.getLastName(), staff.isIdAdmin()
                 , staff.getPhone(), staff.getEmail(), staff.getPassword(), shelterId
         );
-        //System.out.println("addStaff = " + addStaff);
+        System.out.println("Add Staff QUERY: " + addStaff);
         try{
             conn.prepareStatement(addStaff).execute();
             return "Staff Added!!";
@@ -118,7 +132,7 @@ public class StaffService {
             makeStaffManager = String.format(
                     "UPDATE staff " +
                             "SET is_admin = 1 " +
-                            "WHERE email = %s;"
+                            "WHERE email = '%s';"
                     , email);
         }else{
             return "Staff not found";
@@ -137,7 +151,7 @@ public class StaffService {
         if(staff != null){
             deleteStaff = String.format(
                     "DELETE FROM staff " +
-                            "WHERE email = %s;"
+                            "WHERE email = '%s';"
                     , email);
         }else{
             return "Staff not found";
@@ -160,7 +174,7 @@ public class StaffService {
                         "UPDATE staff " +
                                 "SET shelter_id = %s " +
                                 "WHERE email = %s;"
-                        ,shelter.getId() ,email);
+                        ,shelter.getShelterId() ,email);
             }else{
                 return "Shelter not found";
             }
@@ -175,4 +189,40 @@ public class StaffService {
             return e.getMessage();
         }
     }
+
+    public String addPet(Pet pet) {
+        String shelterId;
+        if(pet.getShelterId()==0){
+            shelterId = "null";
+        }else{
+            shelterId = Integer.toString(pet.getShelterId());
+        }
+        String addPetQuery =
+                String.format("INSERT INTO PET(name, species, breed, date_of_birth, gender, health_status, behavior, " +
+                        "description, house_training, neutering_status, shelter_id, join_date)" +
+                        "VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %b, %s, '%s')"
+                , pet.getName(), pet.getSpecies(), pet.getBreed(), pet.getBirthDate().toString(), pet.getGender(), pet.getHealthStatus()
+                ,pet.getBehavior(), pet.getDescription(), pet.getTrainingStatus(), pet.isNeuteringStatus(), shelterId, new Date(System.currentTimeMillis()).toString());
+        System.out.println("Add Pet Query = " + addPetQuery);
+        try{
+            conn.prepareStatement(addPetQuery).execute();
+            return "Pet Added!!";
+        }catch (SQLException e) {
+            e.printStackTrace();
+            return e.getMessage();
+        }
+    }
+
+
+
+
+
+
+
+
+//    public String acceptApplication(boolean status, Long id) {
+//        AdoptionApplication adoptionApplication = getApplicationById(id);
+//
+//         return "";
+//    }
 }

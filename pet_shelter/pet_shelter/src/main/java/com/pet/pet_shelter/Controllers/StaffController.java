@@ -1,4 +1,5 @@
 package com.pet.pet_shelter.Controllers;
+import com.pet.pet_shelter.DTOs.Pet;
 import com.pet.pet_shelter.DTOs.Staff;
 import com.pet.pet_shelter.Services.RequestService;
 import com.pet.pet_shelter.Services.StaffService;
@@ -10,8 +11,6 @@ import java.util.Map;
 @CrossOrigin
 @RequestMapping("/staff")
 public class StaffController {
-    @Autowired
-    RequestService requestService;
     @Autowired
     StaffService staffService;
     @GetMapping("/login")
@@ -37,7 +36,7 @@ public class StaffController {
         if(response.equals("Role Changed"))  return ResponseEntity.ok().body(response);
         else return ResponseEntity.status(409).body(response);
     }
-    @PostMapping("/deleteStaff")
+    @DeleteMapping("/deleteStaff")
     public ResponseEntity<String> deleteStaff(@RequestBody Map<String,String> body){
         String response = staffService.deleteStaff(body.get("email"));
         if(response.equals("Staff Deleted"))  return ResponseEntity.ok().body(response);
@@ -49,4 +48,25 @@ public class StaffController {
         if(response.equals("Staff become in the shelter"))  return ResponseEntity.ok().body(response);
         else return ResponseEntity.status(409).body(response);
     }
+
+    @PostMapping("/addPet")
+    public ResponseEntity<String> addPet(@RequestBody Pet pet){
+        String response = staffService.addPet(pet);
+        if(response.equals("Pet Added!!")){
+            return ResponseEntity.ok().body(response);
+        }
+        return ResponseEntity.status(409).body(response);
+    }
+
+
+
+
+
+
+//    @PostMapping("/acceptApplication")
+//    public ResponseEntity<String> acceptApplication(@RequestBody Map<String, String> body){
+//        boolean status = Boolean.parseBoolean(body.get("status"));
+//        Long id = Long.valueOf(body.get("id"));
+//        String response = staffService.acceptApplication(status,id);
+//    }
 }
