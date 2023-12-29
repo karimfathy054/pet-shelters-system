@@ -1,12 +1,13 @@
 package com.pet.pet_shelter.Services;
 
 
-import com.pet.pet_shelter.DAOs.DTOs.Adopter;
-import com.pet.pet_shelter.DAOs.DTOs.AdoptionApplication;
-import com.pet.pet_shelter.DAOs.DTOs.Pet;
+
+import com.pet.pet_shelter.DAOs.NotificationDao;
+import com.pet.pet_shelter.DTOs.Adopter;
+import com.pet.pet_shelter.DTOs.AdoptionApplication;
+import com.pet.pet_shelter.DTOs.Notification;
 import com.pet.pet_shelter.ENUMS.ApplicationStatus;
-import com.pet.pet_shelter.ENUMS.Gender;
-import com.pet.pet_shelter.ENUMS.HouseTraining;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
@@ -21,8 +22,10 @@ import java.util.Map;
 @Service
 public class AdopterService {
     private Connection conn;
-    private String username = "root";
-    private String password = "password";
+    @Autowired
+    NotificationDao notificationDao;
+    private String username = "scott";
+    private String password = "01223624409ABab@";
     private String url = "jdbc:mysql://localhost:3306/mydb";
     AdopterService() throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.cj.jdbc.Driver");
@@ -36,7 +39,7 @@ public class AdopterService {
             ResultSet resultSet = conn.prepareStatement(getUserQuery).executeQuery();
             if(resultSet.next()){
                 return Adopter.builder()
-                        .adopterId(resultSet.getInt("adopter_id"))
+                        .adopterId(resultSet.getLong("adopter_id"))
                         .phone(resultSet.getString("phone"))
                         .address(resultSet.getString("address"))
                         .firstName(resultSet.getString("firstName"))
@@ -151,6 +154,7 @@ public class AdopterService {
             return e.getMessage();
         }
     }
+    
     private Map<String, String > mapToDB = new HashMap<>(){{
         put("birthDate", "date_of_birth");
         put("healthStatus", "health_status");
@@ -193,6 +197,19 @@ public class AdopterService {
         }catch (SQLException e) {
             e.printStackTrace();
             return null;
+    public List<Notification> getAllNotification(Long id) {
+
+        return  notificationDao.getNotificationsforUser(id);
+    }
+
+    public String deleteStaff(Long id) {
+        String addApplicationQuery = "DELETE FROM app_notify WHERE app_id = "+id+";";
+        try{
+            conn.prepareStatement(addApplicationQuery).execute();
+            return "Notification Deleted!!";
+        }catch (SQLException e) {
+            e.printStackTrace();
+            return e.getMessage();
         }
     }
 }

@@ -12,7 +12,7 @@ public class Staff {
     int id;
     String firstname;
     String lastName;
-    int shelterID;
+    Integer shelterID;
     Boolean isAdmin;
     String phone;
     String email;

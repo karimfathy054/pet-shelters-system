@@ -1,9 +1,11 @@
 package com.pet.pet_shelter.Services;
 
-import com.pet.pet_shelter.DAOs.DTOs.Adopter;
-import com.pet.pet_shelter.DAOs.DTOs.Pet;
-import com.pet.pet_shelter.DAOs.DTOs.Shelter;
-import com.pet.pet_shelter.DAOs.DTOs.Staff;
+
+import com.pet.pet_shelter.DAOs.AdopterDao;
+import com.pet.pet_shelter.DAOs.NotificationDao;
+import com.pet.pet_shelter.DTOs.*;
+import com.pet.pet_shelter.ENUMS.ApplicationStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.*;
@@ -12,8 +14,12 @@ import java.sql.*;
 public class StaffService {
 
     private Connection conn;
-    private String username = "root";
-    private String password = "password";
+    @Autowired
+    AdopterDao adopterDao;
+    @Autowired
+    NotificationDao notificationDao;
+    private String username = "scott";
+    private String password = "01223624409ABab@";
     private String url = "jdbc:mysql://localhost:3306/mydb";
     StaffService() throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.jdbc.Driver");
@@ -65,6 +71,25 @@ public class StaffService {
             return null;
         }
     }
+    private Shelter getShelterByName(String shelterName) {
+        String getUserQuery = "SELECT * FROM shelter WHERE name = '"+ shelterName + "';";
+        try{
+            ResultSet resultSet = conn.prepareStatement(getUserQuery).executeQuery();
+            if(resultSet.next()){
+                return Shelter.builder()
+                        .id(resultSet.getInt("idshelter"))
+                        .location(resultSet.getString("location"))
+                        .name(resultSet.getString("name"))
+                        .phoneNumber(resultSet.getString("phone"))
+                        .managerId(Integer.parseInt(resultSet.getString("manager_id")))
+                        .build();
+            }
+            return null;
+        }catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
     private Shelter getShelterById(int id){
         String getUserQuery = "SELECT * FROM shelter WHERE id = '"+ id + "';";
         try{
@@ -84,21 +109,7 @@ public class StaffService {
             return null;
         }
     }
-//    private AdoptionApplication getApplicationById(Long id){
-//        String getUserQuery = "SELECT * FROM adoption_application WHERE id = '"+ id + "';";
-//        try{
-//            ResultSet resultSet = conn.prepareStatement(getUserQuery).executeQuery();
-//            if(resultSet.next()){
-//                return AdoptionApplication.builder()
-//                        .adopterId(resultSet.getInt("")
-//                        .build();
-//            }
-//            return null;
-//        }catch (SQLException e){
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
+
     public Staff signIn(String email, String password){
         return getStaff(email, password);
     }
@@ -164,16 +175,16 @@ public class StaffService {
             return e.getMessage();
         }
     }
-    public String associateStaffToShelter(String email, int shelterId) {
+    public String associateStaffToShelter(String email, String ShelterName) {
         String associate = "";
         Staff staff = getStaffByEmail(email);
-        Shelter shelter = getShelterById(shelterId);
+        Shelter shelter = getShelterByName(ShelterName);
         if(staff != null){
             if(shelter != null){
                 associate = String.format(
                         "UPDATE staff " +
                                 "SET shelter_id = %s " +
-                                "WHERE email = %s;"
+                                "WHERE email = '%s';"
                         ,shelter.getId() ,email);
             }else{
                 return "Shelter not found";
@@ -189,6 +200,8 @@ public class StaffService {
             return e.getMessage();
         }
     }
+
+
 
     public String addPet(Pet pet) {
         String shelterId;
@@ -267,9 +280,102 @@ public class StaffService {
     }
 
 
-//    public String acceptApplication(boolean status, Long id) {
-//        AdoptionApplication adoptionApplication = getApplicationById(id);
-//
-//         return "";
-//    }
+    private AdoptionRecord getRecordById(Long id){
+        String getUserQuery = "SELECT * FROM adoption_record WHERE pet_id = '"+ id + "';";
+        try{
+            ResultSet resultSet = conn.prepareStatement(getUserQuery).executeQuery();
+            if(resultSet.next()){
+                return AdoptionRecord.builder()
+                        .adoptingFamily(resultSet.getString("adopting_family"))
+                        .petId(resultSet.getLong("pet_id"))
+                        .build();
+            }
+            return null;
+        }catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+    private AdoptionApplication getApplicationById(Long id){
+        String getUserQuery = "SELECT * FROM adoption_application WHERE app_id = '"+ id + "';";
+        try{
+            ResultSet resultSet = conn.prepareStatement(getUserQuery).executeQuery();
+            if(resultSet.next()){
+                return AdoptionApplication.builder()
+                        .adopterId(resultSet.getInt("adopter_id"))
+                        .status(ApplicationStatus.valueOf(resultSet.getString("status")))
+                        .petID(resultSet.getInt("pet_id"))
+                        .appId(resultSet.getInt("app_id"))
+                        .build();
+            }
+            return null;
+        }catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public String acceptApplication(String status, Long id) {
+        AdoptionApplication adoptionApplication = getApplicationById(id);
+        if(adoptionApplication == null){
+            return "app not found";
+        }else if (status.equals("accept") ){
+            Adopter adopter = adopterDao.getAdopterByID(adoptionApplication.getAdopterId()).get();
+            String fullName = adopter.getFirstName()+" "+adopter.getSecondName();
+            AdoptionRecord adoptionRecord = getRecordById(adoptionApplication.getPetID());
+            if(adoptionRecord != null) return "pet already taken ";
+            else{
+                String addRecordQuery =
+                        String.format("INSERT INTO adoption_record(adopting_family, pet_id) " +
+                                        "VALUES('%s', %s);"
+                                ,fullName,adoptionApplication.getAdopterId());
+                try{
+                    conn.prepareStatement(addRecordQuery).execute();
+                    String updateStatus = String.format(
+                            "UPDATE adoption_application " +
+                                    "SET status = '%s' " +
+                                    "WHERE app_id = %s;"
+                            , ApplicationStatus.approved,adoptionApplication.getAppId());
+                    try{
+                        conn.prepareStatement(updateStatus).execute();
+                        Notification notification = Notification.builder()
+                                .adopterId(adopter.getAdopterId())
+                                .appId(adoptionApplication.getAppId())
+                                .notificationTime(new Timestamp(System.currentTimeMillis()))
+                                .build();
+                        notificationDao.addNotification(notification);
+                        return "Accept and Record Added!!";
+                    }
+                    catch (SQLException e) {
+                        e.printStackTrace();
+                        return e.getMessage();
+                    }
+                }catch (SQLException e) {
+                    e.printStackTrace();
+                    return e.getMessage();
+                }
+
+            }
+        }else{
+            String updateStatus = String.format(
+                    "UPDATE adoption_application " +
+                            "SET status = 'rejected' " +
+                            "WHERE app_id = %s;"
+                    , adoptionApplication.getAppId());
+            try{
+                conn.prepareStatement(updateStatus).execute();
+                Adopter adopter = adopterDao.getAdopterByID(adoptionApplication.getAdopterId()).get();
+                Notification notification = Notification.builder()
+                        .adopterId(adopter.getAdopterId())
+                        .appId(adoptionApplication.getAppId())
+                        .notificationTime(new Timestamp(System.currentTimeMillis()))
+                        .build();
+                notificationDao.addNotification(notification);
+                return "Rejected!!";
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+                return e.getMessage();
+            }
+        }
+    }
 }

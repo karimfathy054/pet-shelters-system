@@ -16,7 +16,7 @@ public class NotificationDao {
     @Autowired
     JdbcTemplate jdbc;
 
-    void addNotification(Notification notification){
+    public void addNotification(Notification notification){
         jdbc.update("insert into app_notify (app_id,adopter_id,not_time) values(?,?,?)",
         notification.getAppId(),
         notification.getAdopterId(),

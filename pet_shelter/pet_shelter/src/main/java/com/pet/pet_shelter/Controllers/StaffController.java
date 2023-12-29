@@ -52,7 +52,7 @@ public class StaffController {
     }
     @PostMapping("/associateStaffToShelter")
     public ResponseEntity<String> associateStaffToShelter(@RequestBody Map<String,String> body){
-        String response = staffService.associateStaffToShelter(body.get("email"), Integer.parseInt(body.get("shelterId")));
+        String response = staffService.associateStaffToShelter(body.get("email"), (body.get("shelterName")));
         if(response.equals("Staff become in the shelter"))  return ResponseEntity.ok().body(response);
         else return ResponseEntity.status(409).body(response);
     }
@@ -75,23 +75,14 @@ public class StaffController {
     }
 
 
-
-
-
-
-//    @PostMapping("/addApplication")
-//    public addApplication(){
-//
-//    }
-
-
-
-
-
-//    @PostMapping("/acceptApplication")
-//    public ResponseEntity<String> acceptApplication(@RequestBody Map<String, String> body){
-//        boolean status = Boolean.parseBoolean(body.get("status"));
-//        Long id = Long.valueOf(body.get("id"));
-//        String response = staffService.acceptApplication(status,id);
-//    }
+    @PostMapping("/acceptApplication")
+    public ResponseEntity<String> acceptApplication(@RequestBody Map<String, String> body){
+        String status = (body.get("status"));
+        Long id = Long.valueOf(body.get("id"));
+        String response = staffService.acceptApplication(status,id);
+        if(response.equals("Accept and Record Added!!")||response.equals("Rejected!!")){
+            return ResponseEntity.ok().body(response);
+        }
+        return ResponseEntity.status(409).body(response);
+    }
 }
