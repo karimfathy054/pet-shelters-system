@@ -228,9 +228,9 @@ public class StaffService {
 
     public String addApplication(long petId, long adopterId) {
         String addApplicationQuery =
-                String.format("INSERT INTO ADOPTION_APPLICATION(pet_id, adopter_id, status) " +
-                                "VALUES(%d, %d, '%s');"
-                        , petId, adopterId, ApplicationStatus.PENDING);
+                String.format("INSERT INTO ADOPTION_APPLICATION(pet_id, adopter_id) " +
+                                "VALUES(%d, %d);"
+                        , petId, adopterId);
         System.out.println("Add Application Query = " + addApplicationQuery);
         try{
             conn.prepareStatement(addApplicationQuery).execute();
@@ -238,6 +238,29 @@ public class StaffService {
         }catch (SQLException e) {
             e.printStackTrace();
             return e.getMessage();
+        }
+    }
+
+    public Staff getByEmail(String email) {
+        String getStaffQuery = "SELECT * FROM staff WHERE email = '"+ email + "';";
+        try{
+            ResultSet resultSet = conn.prepareStatement(getStaffQuery).executeQuery();
+            if(resultSet.next()){
+                return Staff.builder()
+                        .staffId(resultSet.getInt("staff_id"))
+                        .firstName(resultSet.getString("first_name"))
+                        .lastName(resultSet.getString("last_name"))
+                        .shelterId(resultSet.getInt("shelter_id"))
+                        .idAdmin((resultSet.getBoolean("is_admin")))
+                        .phone(resultSet.getString("phone"))
+                        .email(resultSet.getString("email"))
+                        .password(resultSet.getString("password"))
+                        .build();
+            }
+            return null;
+        }catch (SQLException e){
+            e.printStackTrace();
+            return null;
         }
     }
 
