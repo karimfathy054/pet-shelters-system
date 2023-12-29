@@ -1,6 +1,8 @@
 package com.pet.pet_shelter.DTOs;
 
-import com.pet.pet_shelter.ENUMS.DocType;
+
+import java.sql.Date;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,8 +10,8 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class Document {
-    String path;
-    DocType type;
-    Long petID;
+public class Notification {
+    Long adopterId;
+    Long appId;
+    Date date;
 }

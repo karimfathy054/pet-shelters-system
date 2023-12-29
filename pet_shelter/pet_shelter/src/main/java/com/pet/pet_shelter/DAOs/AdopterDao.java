@@ -46,7 +46,7 @@ public class AdopterDao {
             .createTime(rs.getTimestamp("create_time"))
             .id(rs.getLong("adopter_id"))
             .password(rs.getString("password"))
-            .username(rs.getString("username"))) 
+            .username(rs.getString("username"))
             .build();
         }
 

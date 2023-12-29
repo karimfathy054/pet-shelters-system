@@ -9,5 +9,5 @@ import lombok.Setter;
 @Setter
 public class VaccinationRecord {
     int petID;
-    String Vaccine;
+    String vaccine;
 }

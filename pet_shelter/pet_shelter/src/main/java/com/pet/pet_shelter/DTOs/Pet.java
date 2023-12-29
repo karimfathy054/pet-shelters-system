@@ -8,22 +8,25 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.Period;
 
 @Builder
 @Getter
 @Setter
 public class Pet {
-    int id;
+    Long id;
     String name;
     String species;
     String breed;
     Date birthDate;
+    int age;
     Gender gender;
     String healthStatus;
     String behavior;
     String description;
-    int shelterID;
-    HouseTraining trainingStatus;
-    NeuturingStatus neuturingStatus;
-
+    HouseTraining houseTraining;
+    Boolean neuturingStatus;
+    Integer shelterID;
+    Date joinDate;
 }
