@@ -12,7 +12,7 @@ import java.sql.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Pet {
-    int petId;
+    long petId;
     String name;
     String species;
     String breed;
@@ -21,7 +21,7 @@ public class Pet {
     String healthStatus;
     String behavior;
     String description;
-    int shelterID;
+    int shelterId;
     HouseTraining trainingStatus;
     boolean neuteringStatus;
     Date joinDate;

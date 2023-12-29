@@ -10,11 +10,11 @@ import java.sql.Date;
 @Getter
 @Setter
 public class Adopter {
-    int adopterId;
+    long adopterId;
     String email;
     String password;
     String firstName;
-    String lastName;
+    String secondName;
     String address;
     String phone;
     Date joinDate;
