@@ -1,31 +1,31 @@
-package com.pet.pet_shelter.Controllers;
-
-import com.pet.pet_shelter.DTOs.*;
-import com.pet.pet_shelter.Services.RequestService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.sql.Date;
-import java.util.List;
-import java.util.Map;
-
-@RestController
-@CrossOrigin
-@RequestMapping("/api")
-public class Controller {
-
-    @Autowired
-    RequestService requestService;
-
-    @GetMapping("/hello")
-    public String hello (){
-        return requestService.getHello();
-    }
-
-    @GetMapping("/getUser")
-    public String getUser(){
-        return requestService.firstSelect();
-    }
+//package com.pet.pet_shelter.Controllers;
+//
+//import com.pet.pet_shelter.DTOs.*;
+//import com.pet.pet_shelter.Services.RequestService;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.web.bind.annotation.*;
+//
+//import java.sql.Date;
+//import java.util.List;
+//import java.util.Map;
+//
+//@RestController
+//@CrossOrigin
+//@RequestMapping("/api")
+//public class Controller {
+//
+//    @Autowired
+//    RequestService requestService;
+//
+//    @GetMapping("/hello")
+//    public String hello (){
+//        return requestService.getHello();
+//    }
+//
+//    @GetMapping("/getUser")
+//    public String getUser(){
+//        return requestService.firstSelect();
+//    }
 //    @Autowired
 //    AppService appService;
 //    @PostMapping("/login")
@@ -187,4 +187,4 @@ public class Controller {
 //        if(appService.removeDocument(path)) return "Document is removed successfully";
 //        return "Can not remove Document";
 //    }
-}
+//}

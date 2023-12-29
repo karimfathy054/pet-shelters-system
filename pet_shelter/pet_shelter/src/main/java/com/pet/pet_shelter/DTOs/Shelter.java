@@ -12,4 +12,5 @@ public class Shelter {
     String name;
     String location;
     String phoneNumber;
+    int manager_id;
 }
