@@ -24,6 +24,6 @@ public class Pet {
     String description;
     HouseTraining houseTraining;
     Boolean neuturingStatus;
-    Long shelterID;
+    Integer shelterID;
     Date joinDate;
 }
