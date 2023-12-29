@@ -69,8 +69,8 @@ public class StaffController {
     }
 
     @PostMapping("/addApplication")
-    public ResponseEntity<String> addApplication(@RequestBody AdoptionApplication application){
-        String response = staffService.addApplication(application);
+    public ResponseEntity<String> addApplication(@RequestBody Map<String, Long> body){
+        String response = staffService.addApplication(body.get("petId"), body.get("adopterId"));
         if(response.equals("Application Submitted!!")){
             return ResponseEntity.ok().body(response);
         }
