@@ -1,4 +1,6 @@
 package com.pet.pet_shelter.Controllers;
+import com.pet.pet_shelter.DTOs.Adopter;
+import com.pet.pet_shelter.DTOs.AdoptionApplication;
 import com.pet.pet_shelter.DTOs.Pet;
 import com.pet.pet_shelter.DTOs.Staff;
 import com.pet.pet_shelter.Services.RequestService;
@@ -57,7 +59,28 @@ public class StaffController {
         }
         return ResponseEntity.status(409).body(response);
     }
+    @PostMapping("/addAdopter")
+    public ResponseEntity<String> addAdopter(@RequestBody Adopter adopter){
+        String response = staffService.addAdopter(adopter);
+        if(response.equals("Adopter Added!!")){
+            return ResponseEntity.ok().body(response);
+        }
+        return ResponseEntity.status(409).body(response);
+    }
 
+    @PostMapping("/addApplication")
+    public ResponseEntity<String> addApplication(@RequestBody AdoptionApplication application){
+        String response = staffService.addApplication(application);
+        if(response.equals("Application Submitted!!")){
+            return ResponseEntity.ok().body(response);
+        }
+        return ResponseEntity.status(409).body(response);
+    }
+
+//    @PostMapping("/addApplication")
+//    public addApplication(){
+//
+//    }
 
 
 

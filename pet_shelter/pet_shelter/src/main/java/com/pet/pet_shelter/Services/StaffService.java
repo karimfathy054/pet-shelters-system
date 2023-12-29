@@ -1,9 +1,6 @@
 package com.pet.pet_shelter.Services;
 
-import com.pet.pet_shelter.DTOs.AdoptionApplication;
-import com.pet.pet_shelter.DTOs.Pet;
-import com.pet.pet_shelter.DTOs.Shelter;
-import com.pet.pet_shelter.DTOs.Staff;
+import com.pet.pet_shelter.DTOs.*;
 import org.springframework.stereotype.Service;
 
 import java.sql.*;
@@ -213,11 +210,25 @@ public class StaffService {
         }
     }
 
+    public String addAdopter(Adopter adopter) {
+        String shelterId;
+        String addAdopterQuery =
+                String.format("INSERT INTO ADOPTER(email, password, firstName, secondName, address, phone) " +
+                                "VALUES('%s', '%s', '%s', '%s', '%s', '%s');"
+                        , adopter.getEmail(), adopter.getPassword(), adopter.getFirstName(), adopter.getSecondName(), adopter.getAddress(), adopter.getPhone());
+        System.out.println("Add Adopter Query = " + addAdopterQuery);
+        try{
+            conn.prepareStatement(addAdopterQuery).execute();
+            return "Adopter Added!!";
+        }catch (SQLException e) {
+            e.printStackTrace();
+            return e.getMessage();
+        }
+    }
 
-
-
-
-
+    public String addApplication(AdoptionApplication application) {
+        return null;
+    }
 
 
 //    public String acceptApplication(boolean status, Long id) {
