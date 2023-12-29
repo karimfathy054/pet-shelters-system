@@ -1,6 +1,9 @@
 package com.pet.pet_shelter.Services;
 
-import com.pet.pet_shelter.DTOs.*;
+import com.pet.pet_shelter.DAOs.DTOs.Adopter;
+import com.pet.pet_shelter.DAOs.DTOs.Pet;
+import com.pet.pet_shelter.DAOs.DTOs.Shelter;
+import com.pet.pet_shelter.DAOs.DTOs.Staff;
 import org.springframework.stereotype.Service;
 
 import java.sql.*;

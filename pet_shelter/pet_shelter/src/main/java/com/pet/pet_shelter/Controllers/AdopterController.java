@@ -1,7 +1,8 @@
 package com.pet.pet_shelter.Controllers;
 
-import com.pet.pet_shelter.DTOs.Adopter;
-import com.pet.pet_shelter.DTOs.AdoptionApplication;
+import com.pet.pet_shelter.DAOs.DTOs.Adopter;
+import com.pet.pet_shelter.DAOs.DTOs.AdoptionApplication;
+import com.pet.pet_shelter.DAOs.DTOs.Pet;
 import com.pet.pet_shelter.Services.AdopterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -59,5 +60,13 @@ public class AdopterController {
             return ResponseEntity.ok().body(response);
         }
         return ResponseEntity.status(409).body(response);
+    }
+    @GetMapping("/search/{field}/{key}")
+    public ResponseEntity<List<Pet>> searchPets(@PathVariable String field, @PathVariable String key){
+        System.out.println("field = " + field);
+        System.out.println("key = " + key);
+        List<Pet> list = adopterService.searchPets(field, key);
+        if(list==null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok().body(list);
     }
 }

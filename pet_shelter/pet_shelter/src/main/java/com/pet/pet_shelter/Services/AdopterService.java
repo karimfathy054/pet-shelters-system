@@ -1,17 +1,22 @@
 package com.pet.pet_shelter.Services;
 
 
-import com.pet.pet_shelter.DTOs.Adopter;
-import com.pet.pet_shelter.DTOs.AdoptionApplication;
+import com.pet.pet_shelter.DAOs.DTOs.Adopter;
+import com.pet.pet_shelter.DAOs.DTOs.AdoptionApplication;
+import com.pet.pet_shelter.DAOs.DTOs.Pet;
 import com.pet.pet_shelter.ENUMS.ApplicationStatus;
+import com.pet.pet_shelter.ENUMS.Gender;
+import com.pet.pet_shelter.ENUMS.HouseTraining;
 import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class AdopterService {
@@ -144,6 +149,50 @@ public class AdopterService {
         }catch (SQLException e) {
             e.printStackTrace();
             return e.getMessage();
+        }
+    }
+    private Map<String, String > mapToDB = new HashMap<>(){{
+        put("birthDate", "date_of_birth");
+        put("healthStatus", "health_status");
+        put("houseTraining", "house_training");
+        put("neuteringStatus", "neutering_status");
+        put("shelterId", "shelter_id");
+        put("joinDate", "join_date");
+    }};
+    public List<Pet> searchPets(String field, String key) {
+        if(mapToDB.containsKey(field)) field = mapToDB.get(field);
+        String searchQuery = String.format(
+                "SELECT * FROM pet WHERE %s LIKE '%s%%'"
+                ,field, key
+        );
+        System.out.println("searchQuery = " + searchQuery);
+
+        try{
+            ResultSet resultSet = conn.prepareStatement(searchQuery).executeQuery();
+            List<Pet> list = new LinkedList<>();
+            while(resultSet.next()){
+                list.add(
+                        Pet.builder()
+                                .id(resultSet.getLong("idpet"))
+                                .name(resultSet.getString("name"))
+                                .species(resultSet.getString("species"))
+                                .breed(resultSet.getString("breed"))
+                                .birthDate(resultSet.getDate("date_of_birth"))
+                                .gender(Gender.valueOf(resultSet.getString("gender")))
+                                .healthStatus(resultSet.getString("health_status"))
+                                .behavior(resultSet.getString("behavior"))
+                                .description(resultSet.getString("description"))
+                                .houseTraining(HouseTraining.valueOf(resultSet.getString("house_training")))
+                                .neuteringStatus(resultSet.getBoolean("neutering_status"))
+                                .shelterId(resultSet.getLong("shelter_id"))
+                                .joinDate(resultSet.getTimestamp("join_date"))
+                                .build()
+                );
+            }
+            return list;
+        }catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }

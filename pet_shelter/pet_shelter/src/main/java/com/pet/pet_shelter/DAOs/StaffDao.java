@@ -1,6 +1,6 @@
 package com.pet.pet_shelter.DAOs;
 
-import com.pet.pet_shelter.DTOs.Staff;
+import com.pet.pet_shelter.DAOs.DTOs.Staff;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;

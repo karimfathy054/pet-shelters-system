@@ -1,6 +1,6 @@
 package com.pet.pet_shelter.DAOs;
 
-import com.pet.pet_shelter.DTOs.VaccinationRecord;
+import com.pet.pet_shelter.DAOs.DTOs.VaccinationRecord;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;

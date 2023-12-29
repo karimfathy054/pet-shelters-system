@@ -1,6 +1,6 @@
 package com.pet.pet_shelter.DAOs;
 
-import com.pet.pet_shelter.DTOs.Document;
+import com.pet.pet_shelter.DAOs.DTOs.Document;
 import com.pet.pet_shelter.ENUMS.DocType;
 
 import java.sql.ResultSet;

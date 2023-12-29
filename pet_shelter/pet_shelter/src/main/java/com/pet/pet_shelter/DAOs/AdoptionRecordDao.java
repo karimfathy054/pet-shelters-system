@@ -1,6 +1,6 @@
 package com.pet.pet_shelter.DAOs;
 
-import com.pet.pet_shelter.DTOs.AdoptionRecord;
+import com.pet.pet_shelter.DAOs.DTOs.AdoptionRecord;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
