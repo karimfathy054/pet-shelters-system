@@ -1,104 +1,200 @@
-CREATE TABLE `adopter` (
-  `username` varchar(16) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `password` varchar(32) NOT NULL,
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `adopter_id` bigint unsigned NOT NULL AUTO_INCREMENT,
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8mb3 ;
+USE `mydb` ;
+
+-- -----------------------------------------------------
+-- Table `mydb`.`adopter`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`adopter` (
+  `email` VARCHAR(255) NOT NULL,
+  `password` VARCHAR(32) NOT NULL,
+  `join_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `adopter_id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `firstName` VARCHAR(20) NOT NULL,
+  `secondName` VARCHAR(20) NOT NULL,
+  `phone` VARCHAR(15) NULL DEFAULT NULL,
+  `address` VARCHAR(50) NULL DEFAULT NULL,
   PRIMARY KEY (`adopter_id`),
-  UNIQUE KEY `adopter_id_UNIQUE` (`adopter_id`),
-  UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+  UNIQUE INDEX `adopter_id_UNIQUE` (`adopter_id` ASC) VISIBLE,
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 11
+DEFAULT CHARACTER SET = utf8mb3;
 
-CREATE TABLE `adoption_application` (
-  `app_id` bigint unsigned NOT NULL,
-  `adopter_firstname` varchar(20) NOT NULL,
-  `adopter_lastname` varchar(20) NOT NULL,
-  `adopter_phone` varchar(15) NOT NULL,
-  `adopter_address` varchar(100) NOT NULL,
-  `status` enum('approved','rejected','pending') NOT NULL,
-  `pet_id` bigint NOT NULL,
-  `adopter_id` bigint unsigned NOT NULL,
-  PRIMARY KEY (`app_id`),
-  UNIQUE KEY `idadoption_application_UNIQUE` (`app_id`),
-  KEY `fk_adoption_application_pet1_idx` (`pet_id`),
-  KEY `fk_adoption_application_adopter1_idx` (`adopter_id`),
-  CONSTRAINT `fk_adoption_application_adopter1` FOREIGN KEY (`adopter_id`) REFERENCES `adopter` (`adopter_id`),
-  CONSTRAINT `fk_adoption_application_pet1` FOREIGN KEY (`pet_id`) REFERENCES `pet` (`idpet`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
-CREATE TABLE `adoption_record` (
-  `adopting_family` varchar(45) NOT NULL,
-  `pet_id` bigint NOT NULL,
-  PRIMARY KEY (`pet_id`),
-  CONSTRAINT `fk_adoption_record_pet1` FOREIGN KEY (`pet_id`) REFERENCES `pet` (`idpet`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-
-CREATE TABLE `app_notify` (
-  `adopter_id` bigint unsigned NOT NULL,
-  `app_id` bigint unsigned NOT NULL,
-  `date` date NOT NULL,
-  PRIMARY KEY (`adopter_id`),
-  KEY `fk_app_notify_adopter1_idx` (`adopter_id`),
-  KEY `fk_app_notify_adoption_application1_idx` (`app_id`),
-  CONSTRAINT `fk_app_notify_adopter1` FOREIGN KEY (`adopter_id`) REFERENCES `adopter` (`adopter_id`),
-  CONSTRAINT `fk_app_notify_adoption_application1` FOREIGN KEY (`app_id`) REFERENCES `adoption_application` (`app_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-
-CREATE TABLE `documents` (
-  `path` varchar(100) NOT NULL,
-  `type` enum('pdf','image') NOT NULL,
-  `pet_id` bigint NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`pet_id`),
-  CONSTRAINT `fk_documents_pet1` FOREIGN KEY (`pet_id`) REFERENCES `pet` (`idpet`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-
-CREATE TABLE `pet` (
-  `idpet` bigint NOT NULL AUTO_INCREMENT,
-  `name` varchar(20) NOT NULL,
-  `species` varchar(45) NOT NULL,
-  `breed` varchar(45) DEFAULT NULL,
-  `date_of_birth` date NOT NULL,
-  `gender` enum('male','female') NOT NULL,
-  `health_status` varchar(100) DEFAULT NULL,
-  `behavior` varchar(50) DEFAULT NULL,
-  `description` varchar(100) DEFAULT NULL,
-  `house_training` enum('trained','not_trained') NOT NULL,
-  `neuturing_status` tinyint DEFAULT NULL,
-  `shelter_id` int NOT NULL,
-  `join_date` date NOT NULL,
-  PRIMARY KEY (`idpet`),
-  KEY `fk_pet_shelter1_idx` (`shelter_id`),
-  CONSTRAINT `fk_pet_shelter1` FOREIGN KEY (`shelter_id`) REFERENCES `shelter` (`idshelter`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-
-CREATE TABLE `shelter` (
-  `idshelter` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(60) NOT NULL,
-  `location` varchar(100) NOT NULL,
-  `phone` varchar(15) NOT NULL,
-  `manager_id` int NOT NULL,
-  PRIMARY KEY (`idshelter`),
-  KEY `fk_shelter_staff1_idx` (`manager_id`),
-  CONSTRAINT `fk_shelter_staff1` FOREIGN KEY (`manager_id`) REFERENCES `staff` (`staff_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-
-CREATE TABLE `staff` (
-  `staff_id` int NOT NULL AUTO_INCREMENT,
-  `first_name` varchar(20) NOT NULL,
-  `last_name` varchar(20) NOT NULL,
-  `shelter_id` int DEFAULT NULL,
-  `staffcol` tinyint NOT NULL,
-  `is_admin` tinyint DEFAULT NULL,
-  `phone` varchar(15) DEFAULT NULL,
+-- -----------------------------------------------------
+-- Table `mydb`.`staff`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`staff` (
+  `staff_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `first_name` VARCHAR(20) NOT NULL,
+  `last_name` VARCHAR(20) NOT NULL,
+  `shelter_id` INT UNSIGNED NULL DEFAULT NULL,
+  `is_admin` TINYINT NULL DEFAULT NULL,
+  `phone` VARCHAR(15) NULL DEFAULT NULL,
+  `email` VARCHAR(20) NOT NULL,
+  `password` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`staff_id`),
-  KEY `fk_staff_shelter_idx` (`shelter_id`),
-  CONSTRAINT `fk_staff_shelter` FOREIGN KEY (`shelter_id`) REFERENCES `shelter` (`idshelter`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+  UNIQUE INDEX `email` (`email` ASC) VISIBLE,
+  UNIQUE INDEX `staff_id_UNIQUE` (`staff_id` ASC) VISIBLE,
+  INDEX `fk_staff_shelter_idx` (`shelter_id` ASC) VISIBLE,
+  CONSTRAINT `fk_staff_shelter`
+    FOREIGN KEY (`shelter_id`)
+    REFERENCES `mydb`.`shelter` (`idshelter`)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 25
+DEFAULT CHARACTER SET = utf8mb3;
 
-CREATE TABLE `vaccinated` (
-  `vaccine` varchar(45) NOT NULL,
-  `pet_id` bigint NOT NULL,
+
+-- -----------------------------------------------------
+-- Table `mydb`.`shelter`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`shelter` (
+  `idshelter` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(60) NOT NULL,
+  `location` VARCHAR(100) NOT NULL,
+  `phone` VARCHAR(15) NOT NULL,
+  `manager_id` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`idshelter`),
+  UNIQUE INDEX `idshelter_UNIQUE` (`idshelter` ASC) VISIBLE,
+  INDEX `fk_shelter_staff1_idx` (`manager_id` ASC) VISIBLE,
+  CONSTRAINT `fk_shelter_staff1`
+    FOREIGN KEY (`manager_id`)
+    REFERENCES `mydb`.`staff` (`staff_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`pet`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`pet` (
+  `idpet` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(20) NOT NULL,
+  `species` VARCHAR(45) NOT NULL,
+  `breed` VARCHAR(45) NULL DEFAULT NULL,
+  `date_of_birth` DATE NOT NULL,
+  `gender` ENUM('male', 'female') NOT NULL,
+  `health_status` VARCHAR(100) NULL DEFAULT NULL,
+  `behavior` VARCHAR(50) NULL DEFAULT NULL,
+  `description` VARCHAR(100) NULL DEFAULT NULL,
+  `house_training` ENUM('trained', 'not_trained') NOT NULL,
+  `neutering_status` TINYINT(1) NULL DEFAULT NULL,
+  `shelter_id` INT(10) UNSIGNED ZEROFILL NULL DEFAULT NULL,
+  `join_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`idpet`),
+  INDEX `fk_pet_shelter1_idx` (`shelter_id` ASC) VISIBLE,
+  CONSTRAINT `fk_pet_shelter1`
+    FOREIGN KEY (`shelter_id`)
+    REFERENCES `mydb`.`shelter` (`idshelter`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 4
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`adoption_application`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`adoption_application` (
+  `app_id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `status` ENUM('approved', 'rejected', 'pending') NOT NULL DEFAULT 'pending',
+  `pet_id` BIGINT UNSIGNED NOT NULL,
+  `adopter_id` BIGINT UNSIGNED NOT NULL,
+  PRIMARY KEY (`app_id`),
+  UNIQUE INDEX `app_id_UNIQUE` (`app_id` ASC) VISIBLE,
+  INDEX `fk_adoption_application_pet1_idx` (`pet_id` ASC) VISIBLE,
+  INDEX `fk_adoption_application_adopter1_idx` (`adopter_id` ASC) VISIBLE,
+  CONSTRAINT `fk_adoption_application_adopter1`
+    FOREIGN KEY (`adopter_id`)
+    REFERENCES `mydb`.`adopter` (`adopter_id`),
+  CONSTRAINT `fk_adoption_application_pet1`
+    FOREIGN KEY (`pet_id`)
+    REFERENCES `mydb`.`pet` (`idpet`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 5
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`adoption_record`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`adoption_record` (
+  `adopting_family` VARCHAR(45) NOT NULL,
+  `pet_id` BIGINT UNSIGNED NOT NULL,
+  PRIMARY KEY (`pet_id`),
+  CONSTRAINT `fk_adoption_record_pet1`
+    FOREIGN KEY (`pet_id`)
+    REFERENCES `mydb`.`pet` (`idpet`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`app_notify`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`app_notify` (
+  `app_id` BIGINT UNSIGNED NOT NULL,
+  `adopter_id` BIGINT UNSIGNED NOT NULL,
+  `not_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`app_id`),
+  UNIQUE INDEX `app_id_UNIQUE` (`app_id` ASC) VISIBLE,
+  INDEX `fk_app_notify_adoption_application1_idx` (`app_id` ASC) VISIBLE,
+  INDEX `fk_app_notify_adopter1_idx` (`adopter_id` ASC) VISIBLE,
+  CONSTRAINT `fk_app_notify_adopter1`
+    FOREIGN KEY (`adopter_id`)
+    REFERENCES `mydb`.`adopter` (`adopter_id`),
+  CONSTRAINT `fk_app_notify_adoption_application1`
+    FOREIGN KEY (`app_id`)
+    REFERENCES `mydb`.`adoption_application` (`app_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`documents`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`documents` (
+  `path` VARCHAR(100) NOT NULL,
+  `type` ENUM('pdf', 'image') NOT NULL,
+  `pet_id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`pet_id`),
+  CONSTRAINT `fk_documents_pet1`
+    FOREIGN KEY (`pet_id`)
+    REFERENCES `mydb`.`pet` (`idpet`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`vaccinated`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`vaccinated` (
+  `vaccine` VARCHAR(45) NOT NULL,
+  `pet_id` BIGINT UNSIGNED NOT NULL,
   PRIMARY KEY (`vaccine`),
-  KEY `fk_vaccinated_pet1_idx` (`pet_id`),
-  CONSTRAINT `fk_vaccinated_pet1` FOREIGN KEY (`pet_id`) REFERENCES `pet` (`idpet`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+  UNIQUE INDEX `vaccine_UNIQUE` (`vaccine` ASC) VISIBLE,
+  INDEX `fk_vaccinated_pet1_idx` (`pet_id` ASC) VISIBLE,
+  CONSTRAINT `fk_vaccinated_pet1`
+    FOREIGN KEY (`pet_id`)
+    REFERENCES `mydb`.`pet` (`idpet`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

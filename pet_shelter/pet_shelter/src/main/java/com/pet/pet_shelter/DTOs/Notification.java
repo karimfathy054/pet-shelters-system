@@ -2,6 +2,7 @@ package com.pet.pet_shelter.DTOs;
 
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -11,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Notification {
-    Long adopterId;
     Long appId;
-    Date date;
+    Long adopterId;
+    Timestamp notificationTime;
 }

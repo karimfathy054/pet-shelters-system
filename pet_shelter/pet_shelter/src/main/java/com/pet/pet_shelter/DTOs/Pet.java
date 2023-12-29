@@ -2,14 +2,11 @@ package com.pet.pet_shelter.DTOs;
 
 import com.pet.pet_shelter.ENUMS.Gender;
 import com.pet.pet_shelter.ENUMS.HouseTraining;
-import com.pet.pet_shelter.ENUMS.NeuturingStatus;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Date;
-import java.time.LocalDate;
-import java.time.Period;
 
 @Builder
 @Getter

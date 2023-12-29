@@ -20,13 +20,11 @@ public class AdoptionApplicationDao {
     JdbcTemplate jdbc;
 
     void addApplication(AdoptionApplication app){
-        jdbc.update("insert into adoption_application (app_id,adopter_firstname,adopter_lastname,adopter_phone,"
-        +"adopter_address,status,pet_id,adopter_id)",
+        jdbc.update("""
+                insert into adoptiona_application (app_id,status,pet_id,adopter_id)
+                values(?,?,?,?)
+                """,
                 app.getId(),
-                app.getAdopterFirstName(),
-                app.getAdopterLastName(),
-                app.getAdopterPhone(),
-                app.getAdopterAddress(),
                 app.getStatus(),
                 app.getPetID(),
                 app.getAdopterID()
@@ -49,11 +47,7 @@ public class AdoptionApplicationDao {
         @Override
         public AdoptionApplication mapRow(ResultSet rs, int rowNum) throws SQLException {
             return AdoptionApplication.builder()
-            .adopterAddress(rs.getString("adopter_address"))
-            .adopterFirstName(rs.getString("adopter_firstname"))
             .adopterID(rs.getLong("adopter_id"))
-            .adopterLastName(rs.getString("adopter_lastname"))
-            .adopterPhone(rs.getString("adopter_phone"))
             .id(rs.getLong("app_id"))
             .status(Enum.valueOf(ApplicationStatus.class,rs.getString("status")))
             .petID(rs.getLong("pet_id"))

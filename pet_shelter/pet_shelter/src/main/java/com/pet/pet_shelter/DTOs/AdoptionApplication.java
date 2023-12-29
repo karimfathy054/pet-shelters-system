@@ -10,10 +10,6 @@ import lombok.Setter;
 @Setter
 public class AdoptionApplication {
     Long id;
-    String adopterFirstName;
-    String adopterLastName;
-    String adopterPhone;
-    String adopterAddress;
     ApplicationStatus status;
     Long petID;
     Long adopterID;

@@ -17,10 +17,11 @@ public class NotificationDao {
     JdbcTemplate jdbc;
 
     void addNotification(Notification notification){
-        jdbc.update("insert into app_notify (adopter_id,app_id,date) values(?,?,?)",
-        notification.getAdopterId(),
+        jdbc.update("insert into app_notify (app_id,adopter_id,not_time) values(?,?,?)",
         notification.getAppId(),
-        notification.getDate() );
+        notification.getAdopterId(),
+        notification.getNotificationTime()
+        );
     }
 
     public List<Notification> getNotificationsforUser(Long userId){
@@ -35,7 +36,7 @@ public class NotificationDao {
             return Notification.builder()
             .adopterId(rs.getLong("adopter_id"))
             .appId(rs.getLong("app_id"))
-            .date(rs.getDate("date")).build();
+            .notificationTime(rs.getTimestamp("not_time")).build();
         }
 
     }

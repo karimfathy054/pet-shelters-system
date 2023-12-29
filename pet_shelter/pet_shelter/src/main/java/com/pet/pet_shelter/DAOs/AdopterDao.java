@@ -18,12 +18,17 @@ public class AdopterDao {
     private JdbcTemplate jdbc;
 
     void addAdopter(Adopter adopter){
-        jdbc.update("insert into adopter (adopter_id,username,password,create_time,email) values(?,?,?,?,?)",
-                adopter.getId(),
-                adopter.getUsername(),
+        jdbc.update("insert into adopter (email,password,join_date,adopter_id,firstName,secondName,phone,address) values(?,?,?,?,?,?,?,?))",
+                adopter.getEmail(),
                 adopter.getPassword(),
-                adopter.getCreateTime(),
-                adopter.getEmail());
+                adopter.getJoinDate(),
+                adopter.getId(),
+                adopter.getFirstName(),
+                adopter.getSecondName(),
+                adopter.getPhone(),
+                adopter.getAddress()
+                
+                );
 
     }
 
@@ -43,10 +48,13 @@ public class AdopterDao {
         public Adopter mapRow(ResultSet rs, int rowNum) throws SQLException {
             return Adopter.builder()
             .email(rs.getString("email"))
-            .createTime(rs.getTimestamp("create_time"))
-            .id(rs.getLong("adopter_id"))
             .password(rs.getString("password"))
-            .username(rs.getString("username"))
+            .joinDate(rs.getTimestamp("create_time"))
+            .id(rs.getLong("adopter_id"))
+            .firstName(rs.getString("firstName"))
+            .secondName(rs.getString("secondName"))
+            .phone(rs.getString("phone"))
+            .address(rs.getString("address"))
             .build();
         }
 

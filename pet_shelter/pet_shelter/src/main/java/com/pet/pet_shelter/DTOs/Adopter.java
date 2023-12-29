@@ -11,9 +11,12 @@ import lombok.Setter;
 @Setter
 public class Adopter {
     Long id;
-    String username;
+    String firstName;
+    String secondName;
+    String phone;
+    String address;
     String email;
     String password;
-    Timestamp createTime;
+    Timestamp joinDate;
     
 }
