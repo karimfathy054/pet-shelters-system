@@ -12,6 +12,7 @@ import java.util.Map;
 public class StaffController {
     @Autowired
     RequestService requestService;
+    @Autowired
     StaffService staffService;
     @GetMapping("/login")
     public ResponseEntity<Staff> login(@RequestBody Map<String, String> body){

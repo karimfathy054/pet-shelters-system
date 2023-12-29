@@ -12,8 +12,8 @@ import java.sql.SQLException;
 public class StaffService {
 
     private Connection conn;
-    private String username = "scott";
-    private String password = "01223624409ABab@";
+    private String username = "root";
+    private String password = "password";
     private String url = "jdbc:mysql://localhost:3306/mydb";
     StaffService() throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.cj.jdbc.Driver");
