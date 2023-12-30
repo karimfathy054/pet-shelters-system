@@ -12,15 +12,6 @@ export default function CreateStaff({ user }) {
     const [shelterId, setShelterId] = useState(null);
 
 
-    // .staffId(resultSet.getInt("staff_id"))
-    //                     .firstName(resultSet.getString("first_name"))
-    //                     .lastName(resultSet.getString("last_name"))
-    //                     .shelterID(resultSet.getInt("shelter_id"))
-    //                     .idAdmin(resultSet.getBoolean("is_admin"))
-    //                     .phone(resultSet.getString("phone"))
-    //                     .email(resultSet.getString("email"))
-    //                     .password(resultSet.getString("password"))
-
     const handleSubmit = (e) => {
         e.preventDefault();
         fetch('http://localhost:8080/staff/createStaff', {
