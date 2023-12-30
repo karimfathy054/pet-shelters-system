@@ -1,5 +1,6 @@
 package com.pet.pet_shelter.Controllers;
 import com.pet.pet_shelter.DTOs.Adopter;
+import com.pet.pet_shelter.DTOs.AdoptionApplication;
 import com.pet.pet_shelter.DTOs.Pet;
 import com.pet.pet_shelter.DTOs.Staff;
 import com.pet.pet_shelter.Services.PetService;
@@ -10,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @CrossOrigin
@@ -116,5 +120,11 @@ public class StaffController {
     public List<Staff> getStaffByShelterName(@PathVariable String shelterName) {
         return staffService.getStaffByShelterName(shelterName);
     }
+
+    @GetMapping("/applications/shelterId={shelterId}")
+    public List<AdoptionApplication> getMethodName(@PathVariable int shelterId) {
+        return staffService.getAppsByShelterId(shelterId);
+    }
+    
     
 }
