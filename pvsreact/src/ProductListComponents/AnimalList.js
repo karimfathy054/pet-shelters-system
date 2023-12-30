@@ -79,7 +79,17 @@ export default function AnimalList({ user }) {
     const handleClose = () => {
         document.getElementsByClassName(styles.cover)[0].style.display = "none"
     }
+    const handleClose2 = () => {
+        document.getElementsByClassName(styles.cover2)[0].style.display = "none"
+    }
+    const handleEdit = () => {
+        setSpecialProduct(products[e.target.id]);
+        console.log(products[e.target.id]);
+        document.getElementsByClassName(styles.cover2)[0].style.display = "block"
+    }
     const handleAdopt = () => {
+    }
+    const handleSave = () => {
     }
     return (
         <div class={styles.list}>
@@ -154,10 +164,17 @@ export default function AnimalList({ user }) {
                                 <p>{product.breed}</p>
                                 <div className={styles.price}>For Adoption</div>
                             </div>
-                            <div class={styles.info}>
-                                <a id={index} onClick={handleReadMe}>Read Me</a>
-                                <FaArrowRight className={styles.i} />
-                            </div>
+                            {
+                                user.adopter ?
+                                    (<div class={styles.info}>
+                                        <a id={index} onClick={handleReadMe}>Read Me</a>
+                                        <FaArrowRight className={styles.i} />
+                                    </div>)
+                                    :
+                                    (<div class={styles.info}>
+                                        <a id={index} onClick={handleEdit}>Edit</a>
+                                    </div>)
+                            }
                         </div>)
                     })}
                 </div>
@@ -183,6 +200,27 @@ export default function AnimalList({ user }) {
                     <div className={styles.category}><p>Birth-Date</p>{specialProduct.birthDate}</div>
                     <div className={styles.cart} onClick={handleAdopt}><FaCartShopping /> Adopt</div>
                 </div>
+            </div>
+            <div className={styles.cover2}>
+                <form class={styles.specialProduct}>
+                    <div className={styles.close} onClick={handleClose2}><IoClose /></div>
+                    {/* {specialProduct.imageLink ? (<div class={styles.image}><img src={require("../images/" + specialProduct.imageLink)} alt="" /></div>) : <></>} */}
+                    <div class={styles.text}>
+                        <h3>{specialProduct.name}</h3>
+                        <p>{specialProduct.description}</p>
+                        <div className={styles.price}>For Adoption</div>
+                    </div>
+                    <div className={styles.brand}><p>Type</p>{specialProduct.type}</div>
+                    <div className={styles.brand}><p>Breed</p>{specialProduct.breed}</div>
+                    <div className={styles.brand}><p>species</p>{specialProduct.species}</div>
+                    <div className={styles.brand}><p>gender</p>{specialProduct.gender}</div>
+                    <div className={styles.brand}><p>Health Status</p>{specialProduct.healthStatus}</div>
+                    <div className={styles.brand}><p>behavior</p>{specialProduct.behavior}</div>
+                    <div className={styles.brand}><p>trainingStatus</p>{specialProduct.trainingStatus}</div>
+                    <div className={styles.brand}><p>neuteringStatus</p>{specialProduct.neuteringStatus}</div>
+                    <div className={styles.category}><p>Birth-Date</p>{specialProduct.birthDate}</div>
+                    <div className={styles.cart} onClick={handleSave}>Save</div>
+                </form>
             </div>
         </div>
     )
