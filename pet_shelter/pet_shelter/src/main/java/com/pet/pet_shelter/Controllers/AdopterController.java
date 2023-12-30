@@ -84,5 +84,4 @@ public class AdopterController {
         if(response.equals("Notification Deleted!!"))  return ResponseEntity.ok().body(response);
         else return ResponseEntity.status(404).body(response);
     }
-
 }

@@ -2,6 +2,7 @@ package com.pet.pet_shelter.Services;
 
 
 import com.pet.pet_shelter.DAOs.AdopterDao;
+import com.pet.pet_shelter.DAOs.AdoptionApplicationDao;
 import com.pet.pet_shelter.DAOs.NotificationDao;
 import com.pet.pet_shelter.DTOs.*;
 import com.pet.pet_shelter.ENUMS.ApplicationStatus;
@@ -22,6 +23,8 @@ public class StaffService {
     private Connection conn;
     @Autowired
     AdopterDao adopterDao;
+    @Autowired
+    AdoptionApplicationDao adoptionApplicationDao;
     @Autowired
     NotificationDao notificationDao;
     private String username = "root";
@@ -320,6 +323,33 @@ public class StaffService {
             return null;
         }
     }
+    // procedure
+    public void rejectAnotherApplication(Long petID){
+        List<AdoptionApplication> list = adoptionApplicationDao.getApplicationsByPetId(petID);
+        for(int i=0; i< list.size(); i++){
+            if(list.get(i).getStatus().equals(ApplicationStatus.pending)){
+            Adopter adopter = adopterDao.getAdopterByID(list.get(i).getAdopterId()).get();
+            String updateStatus = String.format(
+                    "UPDATE adoption_application " +
+                            "SET status = '%s' " +
+                            "WHERE app_id = %s;"
+                    , ApplicationStatus.rejected,list.get(i).getAppId());
+            try{
+                conn.prepareStatement(updateStatus).execute();
+                Notification notification = Notification.builder()
+                        .adopterId(adopter.getAdopterId())
+                        .appId(list.get(i).getAppId())
+                        .notificationTime(new Timestamp(System.currentTimeMillis()))
+                        .build();
+                // procedure
+                notificationDao.addNotification(notification);
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        }
+    }
     public String acceptApplication(String status, Long id) {
         AdoptionApplication adoptionApplication = getApplicationById(id);
         if(adoptionApplication == null){
@@ -336,6 +366,7 @@ public class StaffService {
                                 ,fullName,adoptionApplication.getAdopterId());
                 try{
                     conn.prepareStatement(addRecordQuery).execute();
+                    // procedures
                     String updateStatus = String.format(
                             "UPDATE adoption_application " +
                                     "SET status = '%s' " +
@@ -343,9 +374,12 @@ public class StaffService {
                             , ApplicationStatus.approved,adoptionApplication.getAppId());
                     try{
                         conn.prepareStatement(updateStatus).execute();
+                        // procedure....
+                        rejectAnotherApplication(adoptionApplication.getPetID());
                         Notification notification = Notification.builder()
                                 .adopterId(adopter.getAdopterId())
                                 .appId(adoptionApplication.getAppId())
+                                // procedure...
                                 .notificationTime(new Timestamp(System.currentTimeMillis()))
                                 .build();
                         notificationDao.addNotification(notification);
@@ -370,6 +404,7 @@ public class StaffService {
             try{
                 conn.prepareStatement(updateStatus).execute();
                 Adopter adopter = adopterDao.getAdopterByID(adoptionApplication.getAdopterId()).get();
+                // procedure
                 Notification notification = Notification.builder()
                         .adopterId(adopter.getAdopterId())
                         .appId(adoptionApplication.getAppId())
