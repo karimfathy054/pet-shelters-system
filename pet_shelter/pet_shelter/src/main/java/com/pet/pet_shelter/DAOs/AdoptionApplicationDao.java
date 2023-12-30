@@ -48,12 +48,28 @@ public class AdoptionApplicationDao {
 
     public List<AdoptionApplication> getApplicationsByShelter(int shelterId){
         return jdbc.query("""
-            SELECT status , pet_id , adopter_id 
+            SELECT status , pet_id , adopter_id ,app_id ,name , species , breed , description
             FROM adoption_aplication a
-            JOIN (SELECT idpet , shelter_id FROM pet p)
+            JOIN (SELECT idpet ,name,species,breed , description, shelter_id FROM pet ) AS p
             ON a.pet_id = p.idpet
             WHERE p.shelter_id = ?;
-        """, new AdoptionAppRowMapper(),shelterId);
+        """, new RowMapper<AdoptionApplication>(){
+
+            @Override
+            public AdoptionApplication mapRow(ResultSet rs, int rowNum) throws SQLException {
+                return AdoptionApplication.builder()
+                .status(ApplicationStatus.valueOf("status"))
+                .petID(rs.getLong("pet_id"))
+                .adopterId(rs.getLong("adopter_id"))
+                .appId(rs.getLong("app_id"))
+                .petName(rs.getString("name"))
+                .species(rs.getString("species"))
+                .breed(rs.getString("breed"))
+                .description(rs.getString("description"))
+                .build();
+            }
+            
+        },shelterId);
     }
 
     static class AdoptionAppRowMapper implements RowMapper<AdoptionApplication>{

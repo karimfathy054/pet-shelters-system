@@ -13,4 +13,8 @@ public class AdoptionApplication {
     ApplicationStatus status;
     long petID;
     long adopterId;
+    String petName;
+    String species;
+    String breed; 
+    String description;
 }
