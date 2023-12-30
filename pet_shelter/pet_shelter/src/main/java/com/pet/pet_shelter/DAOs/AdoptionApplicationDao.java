@@ -21,7 +21,7 @@ public class AdoptionApplicationDao {
 
     void addApplication(AdoptionApplication app){
         jdbc.update("""
-                insert into adoptiona_application (status,pet_id,adopter_id)
+                insert into adoption_application (status,pet_id,adopter_id)
                 values(?,?,?)
                 """,
                 app.getStatus(),
@@ -39,6 +39,37 @@ public class AdoptionApplicationDao {
     }
     public List<AdoptionApplication> getApplicationsByAdopterId(Long id){
         return jdbc.query("select * from adoption_application where adoption_application.adopter_id = ?",new AdoptionAppRowMapper(),id);
+    }
+
+    public boolean checkExistance(long petId, long adopterId){
+        List<AdoptionApplication> res = jdbc.query("SELECT * FROM adoption_application a WHERE a.pet_id = ? AND a.adopter_id = ?",new AdoptionAppRowMapper(), petId,adopterId);
+        return !res.isEmpty();
+    }
+
+    public List<AdoptionApplication> getApplicationsByShelter(int shelterId){
+        return jdbc.query("""
+            SELECT status , pet_id , adopter_id ,app_id ,name , species , breed , description
+            FROM adoption_application a
+            JOIN (SELECT idpet ,name,species,breed , description, shelter_id FROM pet ) AS p
+            ON a.pet_id = p.idpet
+            WHERE p.shelter_id = ?;
+        """, new RowMapper<AdoptionApplication>(){
+
+            @Override
+            public AdoptionApplication mapRow(ResultSet rs, int rowNum) throws SQLException {
+                return AdoptionApplication.builder()
+                .status(ApplicationStatus.valueOf("status"))
+                .petID(rs.getLong("pet_id"))
+                .adopterId(rs.getLong("adopter_id"))
+                .appId(rs.getLong("app_id"))
+                .petName(rs.getString("name"))
+                .species(rs.getString("species"))
+                .breed(rs.getString("breed"))
+                .description(rs.getString("description"))
+                .build();
+            }
+            
+        },shelterId);
     }
 
     static class AdoptionAppRowMapper implements RowMapper<AdoptionApplication>{

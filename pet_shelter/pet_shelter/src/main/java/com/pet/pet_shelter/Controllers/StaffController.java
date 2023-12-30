@@ -1,8 +1,12 @@
 package com.pet.pet_shelter.Controllers;
+import com.pet.pet_shelter.DAOs.ShelterDao;
 import com.pet.pet_shelter.DTOs.Adopter;
+import com.pet.pet_shelter.DTOs.AdoptionApplication;
 import com.pet.pet_shelter.DTOs.Pet;
+import com.pet.pet_shelter.DTOs.Shelter;
 import com.pet.pet_shelter.DTOs.Staff;
 import com.pet.pet_shelter.Services.PetService;
+import com.pet.pet_shelter.Services.ShelterService;
 import com.pet.pet_shelter.Services.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +14,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @CrossOrigin
@@ -19,6 +26,8 @@ public class StaffController {
     PetService petService;
     @Autowired
     StaffService staffService;
+    @Autowired
+    ShelterService shelterService;
 
     @PostMapping("/login")
     public ResponseEntity<Staff> login(@RequestBody Map<String, String> body){
@@ -102,6 +111,7 @@ public class StaffController {
     public ResponseEntity<String> changePets(@PathVariable String field, @PathVariable String key, @PathVariable long petId){
         System.out.println("field = " + field);
         System.out.println("key = " + key);
+        System.out.println(petId);
         String response = staffService.changePets(field, key, petId);
         if(!response.equals("Field Changed")) return ResponseEntity.status(409).body(response);
         return ResponseEntity.ok().body(response);
@@ -115,5 +125,16 @@ public class StaffController {
     public List<Staff> getStaffByShelterName(@PathVariable String shelterName) {
         return staffService.getStaffByShelterName(shelterName);
     }
+
+    @GetMapping("/applications/shelterId={shelterId}")
+    public List<AdoptionApplication> getMethodName(@PathVariable int shelterId) {
+        return staffService.getAppsByShelterId(shelterId);
+    }
+    
+    @GetMapping("/allShelters/{pageNumber}")
+    public List<Shelter> getShelterPageShelters(@PathVariable int pageNumber) {
+        return shelterService.findallBYpage(pageNumber);
+    }
+    
     
 }

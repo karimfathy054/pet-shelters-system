@@ -49,6 +49,10 @@ public class ShelterDao {
         return jdbc.update("DELETE FROM shelter WHERE shelter.shelter_id = ?", shelterId);
     }
 
+    public List<Shelter> getAllShelters(int pageNumber){
+        return jdbc.query("SELECT * from shelters LIMIT (? * 20) , 20",new ShelterRowMapper(),pageNumber);
+    }
+
     public int changeAttribute(String attr , String value , String shelterId){
         return jdbc.update("""
                 UPDATE shelter

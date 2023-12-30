@@ -25,7 +25,7 @@ export default function ProductListHeader({ user }) {
             <ul>
                 <li><a onClick={handleHome}>Home</a></li>
                 <li><a onClick={handleAnimals} id={styles.animals}>Pets</a></li>
-                <li><a onClick={handleAddAnimal} >Add Animal</a></li>
+                {user.adopter ? (<></>) : (<li><a onClick={handleAddAnimal} >Add Animal</a></li>)}
             </ul>
         </div>
     )
