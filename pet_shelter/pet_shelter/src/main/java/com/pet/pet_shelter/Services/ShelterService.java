@@ -44,15 +44,21 @@ public class ShelterService {
         else return null;
     }
 
-    public boolean deleteShelter(Integer shelterId,Integer staffId ){
-        if(!staffDao.checkStaffIsAdmin(staffId)) return false;
-        if(shelterDao.deleteShelter(shelterId) == 1) return true;
-        return false;
-    }
-    // public boolean deleteShelter(Integer shelterId){
+    // public boolean deleteShelter(Integer shelterId,Integer staffId ){
+    //     if(!staffDao.checkStaffIsAdmin(staffId)) return false;
     //     if(shelterDao.deleteShelter(shelterId) == 1) return true;
-    //     else return false;
+    //     return false;
     // }
+
+    //change shelter management
+
+    public boolean deleteShelter(Integer shelterId){
+        return (shelterDao.deleteShelter(shelterId) == 1);
+    }
+
+    public boolean changeSheltermanager(String managerEmail , String shelterName){
+        return (shelterDao.changeManager(managerEmail, shelterName) == 1);
+    }
 
     
 

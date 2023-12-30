@@ -44,6 +44,10 @@ public class StaffDao {
         }
     }
 
+    public Optional<Staff> getStaffByEmail(String staffEmail){
+        return jdbc.query("SELECT * FROM staff s WHERE s.email = ?", new StaffRowMapper(),staffEmail).stream().findFirst();
+    }
+
     static class StaffRowMapper implements RowMapper<Staff>{
 
         @Override
