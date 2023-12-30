@@ -33,30 +33,53 @@ export default function Signin({ onLogin }) {
                 .then(response => response.json())
                 .then(data => {
                     console.log(data)
-                    createUser(data);
+                    onLogin({
+                        email: data.email,
+                        firstName: data.firstName,
+                        idAdmin: data.idAdmin,
+                        lastName: data.lastName,
+                        password: data.password,
+                        phone: data.phone,
+                        shelterID: data.shelterID,
+                        staffId: data.staffId
+                    });
                 })
                 .catch(error => { console.error('Error creating user:', error); window.alert("Account Not Found Login") });
         }
         else if (adopterColor == "rgb(33, 43, 49)") {
             console.log("adopter");
+            fetch('http://localhost:8080/adopter/signIn', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: userName,
+                    password: password
+                }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    onLogin({
+                        email: data.email,
+                        firstName: data.firstName,
+                        lastName: data.secondName,
+                        password: data.password,
+                        phone: data.phone,
+                        joinDate: data.joinDate,
+                        address: data.address,
+                        adopterId: data.adopterId,
+                        adopter: true
+                    });
+                })
+                .catch(error => { console.error('Error creating user:', error); window.alert("Account Not Found Login") });
         }
         else {
             window.alert("Please Choose staff or adopter")
         }
     }
 
-    function createUser(data) {
-        onLogin({
-            email: data.email,
-            firstName: data.firstName,
-            idAdmin: data.idAdmin,
-            lastName: data.lastName,
-            password: data.password,
-            phone: data.phone,
-            shelterID: data.shelterID,
-            staffId: data.staffId
-        });
-    }
     const handleStaff = () => {
         document.getElementById(styles.staff).style.backgroundColor = "#212b31";
         document.getElementById(styles.adopter).style.backgroundColor = "inherit";

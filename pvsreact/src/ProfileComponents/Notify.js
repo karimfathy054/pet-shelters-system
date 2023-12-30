@@ -1,20 +1,16 @@
 import styles from "../CSS/profileStyles.module.css";
 import { useState, useEffect } from "react";
-export default function Requests({ user }) {
-    const [applications, setPplications] = useState([]);
-
-    const handleAcceptPet = () => {
-
-    }
-    const handleRefusePet = () => {
+export default function Notify({ user }) {
+    const [notifies, setNotifies] = useState([]);
+    const handleReed = () => {
 
     }
     return (
         <>
-            <div id="requests1" className={styles.requests}>
+            <div id="notify1" className={styles.notify}>
                 <div class={styles.container}>
                     <div class={styles.content}>
-                        {applications.map((product, index) => {
+                        {notifies.map((product, index) => {
                             return (
                                 (<div class={styles.box}>
                                     {product.imageLink ? (<div class={styles.image}><img src={require("../images/" + product.imageLink)} alt="" /></div>) : (<></>)}
@@ -39,10 +35,8 @@ export default function Requests({ user }) {
                                 <p>description</p>
                             </div>
                             <div className={styles.brand}><p>Status</p>Status</div>
-                            <div className={styles.category}><p>Breed</p>breed</div>
                             <div className={styles.actionProduct}>
-                                <div className={styles.accept} onClick={handleAcceptPet} id="">Accept</div>
-                                <div className={styles.refuse} onClick={handleRefusePet} id="">Refuse</div>
+                                <div className={styles.accept} onClick={handleReed} id="">Done</div>
                             </div>
                         </div>
                     </div>
