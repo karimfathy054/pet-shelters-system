@@ -453,5 +453,8 @@ public class StaffService {
         return staffDao.getStaffByShelterName(shelterName);
     }
 
+    public List<AdoptionApplication> getAppsByShelterId(int shelterId){
+        return adoptionApplicationDao.getApplicationsByShelter(shelterId);
+    }
     
 }

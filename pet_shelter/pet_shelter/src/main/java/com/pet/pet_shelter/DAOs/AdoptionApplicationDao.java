@@ -21,7 +21,7 @@ public class AdoptionApplicationDao {
 
     void addApplication(AdoptionApplication app){
         jdbc.update("""
-                insert into adoptiona_application (status,pet_id,adopter_id)
+                insert into adoption_application (status,pet_id,adopter_id)
                 values(?,?,?)
                 """,
                 app.getStatus(),
@@ -44,6 +44,16 @@ public class AdoptionApplicationDao {
     public boolean checkExistance(long petId, long adopterId){
         List<AdoptionApplication> res = jdbc.query("SELECT * FROM adoption_application a WHERE a.pet_id = ? AND a.adopter_id = ?",new AdoptionAppRowMapper(), petId,adopterId);
         return !res.isEmpty();
+    }
+
+    public List<AdoptionApplication> getApplicationsByShelter(int shelterId){
+        return jdbc.query("""
+            SELECT status , pet_id , adopter_id 
+            FROM adoption_aplication a
+            JOIN (SELECT idpet , shelter_id FROM pet p)
+            ON a.pet_id = p.idpet
+            WHERE p.shelter_id = ?;
+        """, new AdoptionAppRowMapper(),shelterId);
     }
 
     static class AdoptionAppRowMapper implements RowMapper<AdoptionApplication>{
