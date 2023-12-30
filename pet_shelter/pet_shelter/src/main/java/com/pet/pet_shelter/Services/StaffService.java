@@ -434,10 +434,7 @@ public class StaffService {
         if(!key.equals("null") && !field.equals("shelterId")) key = "'" + key + "'";
 
         if(mapToDB.containsKey(field)) field = mapToDB.get(field);
-        String changeQuery = String.format(
-                "UPDATE pet SET %s = %s where idpet = %d;"
-                ,field, key, petId
-        );
+        String changeQuery = "UPDATE pet SET "+field+" = "+key+" where idpet = "+petId;
         System.out.println("changeQuery = " + changeQuery);
 
         try{
