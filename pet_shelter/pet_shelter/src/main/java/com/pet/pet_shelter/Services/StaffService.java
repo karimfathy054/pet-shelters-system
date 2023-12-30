@@ -4,6 +4,7 @@ package com.pet.pet_shelter.Services;
 import com.pet.pet_shelter.DAOs.AdopterDao;
 import com.pet.pet_shelter.DAOs.AdoptionApplicationDao;
 import com.pet.pet_shelter.DAOs.NotificationDao;
+import com.pet.pet_shelter.DAOs.StaffDao;
 import com.pet.pet_shelter.DTOs.*;
 import com.pet.pet_shelter.ENUMS.ApplicationStatus;
 import com.pet.pet_shelter.ENUMS.Gender;
@@ -27,6 +28,8 @@ public class StaffService {
     AdoptionApplicationDao adoptionApplicationDao;
     @Autowired
     NotificationDao notificationDao;
+    @Autowired
+    StaffDao staffDao;
     private String username = "root";
     private String password = "#mora951753132547698#";
     private String url = "jdbc:mysql://localhost:3306/mydb";
@@ -445,4 +448,13 @@ public class StaffService {
             return e.getMessage();
         }
     }
+
+    public List<Staff> getStaffByShelterId(long shelterId){
+        return staffDao.getStaffByShelterId(shelterId);
+    }
+    public List<Staff> getStaffByShelterName(String shelterName){
+        return staffDao.getStaffByShelterName(shelterName);
+    }
+
+    
 }
