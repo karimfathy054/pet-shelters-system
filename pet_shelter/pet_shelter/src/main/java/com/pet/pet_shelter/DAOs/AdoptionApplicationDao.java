@@ -48,9 +48,9 @@ public class AdoptionApplicationDao {
 
     public List<AdoptionApplication> getApplicationsByShelter(int shelterId){
         return jdbc.query("""
-            SELECT status , pet_id , adopter_id 
-            FROM adoption_aplication a
-            JOIN (SELECT idpet , shelter_id FROM pet p)
+            SELECT status , pet_id , adopter_id , app_id
+            FROM adoption_application a
+            JOIN (SELECT idpet , shelter_id FROM pet ) as p
             ON a.pet_id = p.idpet
             WHERE p.shelter_id = ?;
         """, new AdoptionAppRowMapper(),shelterId);

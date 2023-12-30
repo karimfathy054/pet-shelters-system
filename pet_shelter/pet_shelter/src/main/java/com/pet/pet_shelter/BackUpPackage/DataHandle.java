@@ -18,7 +18,7 @@ public class DataHandle {
 
             String dbName = "mydb";
             String dbUser = "root";
-            String dbPass = "password";
+            String dbPass = "#mora951753132547698#";
 
 
             String folderPath = jarDir + "\\backup";

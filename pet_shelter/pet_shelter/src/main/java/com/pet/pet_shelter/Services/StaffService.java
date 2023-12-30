@@ -31,7 +31,7 @@ public class StaffService {
     @Autowired
     StaffDao staffDao;
     private String username = "root";
-    private String password = "password";
+    private String password = "#mora951753132547698#";
     private String url = "jdbc:mysql://localhost:3306/mydb";
     StaffService() throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.jdbc.Driver");
