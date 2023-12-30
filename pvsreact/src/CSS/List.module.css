@@ -503,7 +503,8 @@ a {
 
 /* End Products */
 /* Start Special Product */
-.cover {
+.cover,
+.cover2 {
     display: none;
     position: fixed;
     top: 0;

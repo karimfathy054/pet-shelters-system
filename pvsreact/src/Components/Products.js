@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom"
 export default function Products({ user }) {
     const navigate = useNavigate();
     const handleShopping = () => {
-        navigate('/ProductList', { replace: true, state: { user } });
+        navigate('/Animals', { replace: true, state: { user } });
     }
     return (
         <div className={styles.products} id="products">

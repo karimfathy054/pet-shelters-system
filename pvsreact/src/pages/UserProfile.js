@@ -3,10 +3,11 @@ import Navbar from "../ProfileComponents/Navbar"
 import Info from "../ProfileComponents/Info";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import MyProducts from "../ProfileComponents/MyProducts";
 import CreateStaff from "../ProfileComponents/CreateStaff";
 import Requests from "../ProfileComponents/Requests";
-import Admins from "../ProfileComponents/Admins";
+import CreateShelter from "../ProfileComponents/CreateShelter";
+import Notify from "../ProfileComponents/Notify";
+import Assign from "../ProfileComponents/Assign";
 export default function Profile() {
   const location = useLocation();
   const [user, setUser] = useState({});
@@ -23,9 +24,10 @@ export default function Profile() {
         <Navbar user={user}></Navbar>
         <Info user={user}></Info>
         <CreateStaff user={user}></CreateStaff>
-        <MyProducts user={user}></MyProducts>
         <Requests user={user}></Requests>
-        <Admins user={user}></Admins>
+        <CreateShelter user={user}></CreateShelter>
+        <Notify user={user}></Notify>
+        <Assign user={user}></Assign>
       </div>
     </>
   )

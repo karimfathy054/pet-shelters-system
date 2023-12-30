@@ -499,6 +499,50 @@ form .searchIcon {
 
 
 /* End CreateStaff */
+/* Start Notify */
+.notify {
+    display: none;
+    flex-grow: 18;
+    align-items: stretch;
+    padding-top: 50px;
+    padding-bottom: 120px;
+    max-width: 1300px;
+    background-color: #eff2f3;
+}
+
+.notify .box .brand,
+.notify .box .category {
+    display: flex;
+    gap: 10px;
+    padding-left: 20px;
+}
+
+.notify .box .category {
+    margin-bottom: 20px;
+}
+
+.notify .box .brand p,
+.notify .box .category p {
+    font-weight: bold;
+}
+
+.notify .box .actionProduct {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.notify .box .actionProduct .accept,
+.notify .box .actionProduct .refuse {
+    background-color: var(--Second-color);
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 15px;
+    padding: 5px 10px;
+}
+
+/* End Notify */
 /* Start Requests */
 .requests {
     display: none;
@@ -543,8 +587,83 @@ form .searchIcon {
 }
 
 /* End Requests */
-/* Start Admins */
-.admins {
+/* Start Assign */
+.assign {
+    display: none;
+    flex-grow: 18;
+    align-items: stretch;
+    padding-top: 120px;
+    padding-bottom: 120px;
+    max-width: 1300px;
+    background-color: #eff2f3;
+}
+
+.assign .content h2 {
+    display: flex;
+    align-items: center;
+    color: var(--Second-color);
+}
+
+.assign .content form input {
+    margin: 10px 0;
+    border: none;
+    border-bottom: 1px solid #bcbcbc;
+    padding: 10px;
+    width: 100%;
+    font-size: 17px;
+    background-color: inherit;
+}
+
+.assign .content form input:focus {
+    outline: none;
+}
+
+.assign .content form input::placeholder {
+    font-size: 15px;
+    text-transform: uppercase;
+    color: #777;
+}
+
+.assign .content form button {
+    width: 30%;
+    margin: 30px auto;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    background-color: var(--Second-color);
+    color: white;
+    cursor: pointer;
+    transition: var(--main-transition);
+}
+
+.assign .content form button:hover {
+    box-shadow: -10px 7px 20px rgba(0, 0, 0, 0.341);
+    background-color: var(--back-ground-color);
+    color: white;
+}
+
+.assign .content a {
+    width: fit-content;
+    align-self: flex-start;
+    color: var(--Second-color);
+    padding: 20px 0 0 20px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 15px;
+    transition: var(--main-transition);
+}
+
+.assign .content form a:hover {
+    text-shadow: -10px 7px 20px rgba(0, 0, 0, 0.541);
+}
+
+
+/* End Assign */
+/* Start CreateShelter */
+.CreateShelter {
     display: none;
     flex-grow: 18;
     align-items: stretch;
@@ -555,53 +674,66 @@ form .searchIcon {
     color: var(--Second-color);
 }
 
-.admins .action form {
+.CreateShelter .content h2 {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center !important;
-    height: fit-content;
-    margin-left: 30px;
+    align-items: center;
+    color: var(--Second-color);
 }
 
-.admins .action form svg {
-    cursor: pointer;
-}
-
-.admins .users {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 30px;
-    padding: 20px;
-}
-
-.admins .users .user {
-    background-color: white;
+.CreateShelter .content form input {
+    margin: 10px 0;
+    border: none;
+    border-bottom: 1px solid #bcbcbc;
     padding: 10px;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
+    width: 100%;
+    font-size: 17px;
+    background-color: inherit;
 }
 
-.admins .users .user .userInfo {
-    font-weight: bold;
+.CreateShelter .content form input:focus {
+    outline: none;
 }
 
-.admins .users .user .userInfo .userName {
+.CreateShelter .content form input::placeholder {
+    font-size: 15px;
     text-transform: uppercase;
+    color: #777;
 }
 
-.admins .users .user .createAdmin {
-    align-self: flex-end;
-    margin: 10px;
+.CreateShelter .content form button {
+    width: 30%;
+    margin: 30px auto;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
     background-color: var(--Second-color);
     color: white;
-    padding: 5px;
-    border-radius: 5px;
     cursor: pointer;
-    font-weight: bold;
-    text-transform: uppercase;
-    font-size: 12px;
+    transition: var(--main-transition);
 }
 
-/* End Admins */
+.CreateShelter .content form button:hover {
+    box-shadow: -10px 7px 20px rgba(0, 0, 0, 0.341);
+    background-color: var(--back-ground-color);
+    color: white;
+}
+
+.CreateShelter .content a {
+    width: fit-content;
+    align-self: flex-start;
+    color: var(--Second-color);
+    padding: 20px 0 0 20px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 15px;
+    transition: var(--main-transition);
+}
+
+.CreateShelter .content form a:hover {
+    text-shadow: -10px 7px 20px rgba(0, 0, 0, 0.541);
+}
+
+/* End CreateShelter */

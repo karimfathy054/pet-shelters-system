@@ -11,12 +11,17 @@ export default function Info({ user }) {
                     <div className={styles.userName}><p>Last Name</p> {user.lastName}</div>
                     <div className={styles.userName}><p>Email</p> {user.email}</div>
                     <div className={styles.userName}><p>Phone</p> {user.phone}</div>
-                    {user.idAdmin ? (<h2>Manager Of The Shelters</h2>) : (<div className={styles.userName}><p>Shelter</p> {user.shelterID}</div>)}
+                    {user.adopter ? (<>
+                        <div className={styles.userName}><p>Address</p> {user.address}</div>
+                        <div className={styles.userName}><p>Join Date</p> {user.joinDate}</div>
+                    </>
+                    ) : (<></>)}
+                    {!user.adopter ? (user.idAdmin ? (<h2>Manager Of The Shelters</h2>) : (<div className={styles.userName}><p>Shelter</p> {user.shelterID}</div>)) : (<></>)}
                 </div>
                 <div className={styles.private}>
                     <div className={styles.privateInfo}>
                         <div className={styles.photo}>{user.image ? (<img src={require("../images/" + user.image)}></img>) : <FaUserCircle />}</div>
-                        <div className={styles.role}>{user.idAdmin ? (<h3>admin</h3>) : (<h3>Staff</h3>)}</div>
+                        <div className={styles.role}>{!user.adopter ? (user.idAdmin ? (<h3>admin</h3>) : (<h3>Staff</h3>)) : (<h3>Adopter</h3>)}</div>
                         <div className={styles.email}>{user.email}</div>
                     </div>
                 </div>
