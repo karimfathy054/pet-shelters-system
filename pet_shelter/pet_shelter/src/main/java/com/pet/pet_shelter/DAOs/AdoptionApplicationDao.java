@@ -52,13 +52,13 @@ public class AdoptionApplicationDao {
             FROM adoption_application a
             JOIN (SELECT idpet ,name,species,breed , description, shelter_id FROM pet ) AS p
             ON a.pet_id = p.idpet
-            WHERE p.shelter_id = ?;
+            WHERE p.shelter_id = ? AND a.status = "pending";
         """, new RowMapper<AdoptionApplication>(){
 
             @Override
             public AdoptionApplication mapRow(ResultSet rs, int rowNum) throws SQLException {
                 return AdoptionApplication.builder()
-                .status(ApplicationStatus.valueOf("status"))
+                .status(ApplicationStatus.valueOf(rs.getString("status")))
                 .petID(rs.getLong("pet_id"))
                 .adopterId(rs.getLong("adopter_id"))
                 .appId(rs.getLong("app_id"))

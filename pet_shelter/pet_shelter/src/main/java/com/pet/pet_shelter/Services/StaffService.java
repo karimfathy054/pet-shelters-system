@@ -4,6 +4,7 @@ package com.pet.pet_shelter.Services;
 import com.pet.pet_shelter.DAOs.AdopterDao;
 import com.pet.pet_shelter.DAOs.AdoptionApplicationDao;
 import com.pet.pet_shelter.DAOs.NotificationDao;
+import com.pet.pet_shelter.DAOs.PetDao;
 import com.pet.pet_shelter.DAOs.StaffDao;
 import com.pet.pet_shelter.DTOs.*;
 import com.pet.pet_shelter.ENUMS.ApplicationStatus;
@@ -29,9 +30,11 @@ public class StaffService {
     @Autowired
     NotificationDao notificationDao;
     @Autowired
+    PetDao petDao;
+    @Autowired
     StaffDao staffDao;
     private String username = "root";
-    private String password = "#mora951753132547698#";
+    private String password = "root";
     private String url = "jdbc:mysql://localhost:3306/mydb";
     StaffService() throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.jdbc.Driver");
@@ -231,7 +234,8 @@ public class StaffService {
         System.out.println("Add Pet Query = " + addPetQuery);
         try{
             conn.prepareStatement(addPetQuery).execute();
-            return "Pet Added!!";
+            Pet p = petDao.findPetByName(pet.getName(), pet.getSpecies(), pet.getBreed()).get();
+            return p.getId().toString();
         }catch (SQLException e) {
             e.printStackTrace();
             return e.getMessage();
