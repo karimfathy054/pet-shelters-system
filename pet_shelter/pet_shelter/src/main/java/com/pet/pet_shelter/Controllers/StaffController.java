@@ -2,6 +2,7 @@ package com.pet.pet_shelter.Controllers;
 import com.pet.pet_shelter.DTOs.Adopter;
 import com.pet.pet_shelter.DTOs.Pet;
 import com.pet.pet_shelter.DTOs.Staff;
+import com.pet.pet_shelter.Services.PetService;
 import com.pet.pet_shelter.Services.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,8 @@ import java.util.Map;
 @CrossOrigin
 @RequestMapping("/staff")
 public class StaffController {
+    @Autowired
+    PetService petService;
     @Autowired
     StaffService staffService;
 
@@ -69,6 +72,12 @@ public class StaffController {
         }
         return ResponseEntity.status(409).body(response);
     }
+
+    @DeleteMapping("/delete/petId={petId}")
+    public boolean removePet(@PathVariable long petId){
+        return petService.removePet(petId);
+    }
+    
     @PostMapping("/addAdopter")
     public ResponseEntity<String> addAdopter(@RequestBody Adopter adopter){
         String response = staffService.addAdopter(adopter);

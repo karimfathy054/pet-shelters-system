@@ -11,7 +11,6 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -24,7 +23,10 @@ public class PetDao {
     JdbcTemplate jdbc;
 
     void addPet(Pet pet){
-        jdbc.update("insert into pet (name,species,breed,date_of_birth,gender,health_status,behavior,description,house_training,neuturing_status,shelter_id,join_date) values (?,?,?,?,?,?,?,?,?,?,?,?)",
+        jdbc.update("""
+            insert into pet (name,species,breed,date_of_birth,gender,health_status,behavior,description
+            ,house_training,neuturing_status,shelter_id,join_date) values (?,?,?,?,?,?,?,?,?,?,?,?)
+            """,
                 pet.getName(),
                 pet.getSpecies(),
                 pet.getBreed(),
@@ -38,6 +40,10 @@ public class PetDao {
                 pet.getShelterId(),
                 pet.getJoinDate()
                 );
+    }
+
+    public List<Pet> findAll(){
+        return jdbc.query("SELECT * FROM pet", new PetRowMapper());
     }
 
     Optional<Pet> findPetByID(Long petId){
@@ -66,14 +72,33 @@ public class PetDao {
         return jdbc.query("select * from pet where pet.neuturing_status = ?", new PetRowMapper() , neuturingStatus);
     }
 
-    List<Pet> findPetByLocation(String location){
+    public List<Pet> findPetByLocation(String location){
         return jdbc.query("""
                 SELECT p.idpet,p.name,p.species,p.breed,p.date_of_birth,p.gender,p.health_status,p.behavior,p.description,p.house_training,p.neuturing_status,p.shelter_id,p.join_date
                 FROM pet p
                 INNER JOIN (SELECT idshelter ,name ,location from shelter s)
                 ON p.shelter_id = s.idshelter
-                WHERE s.location = ?;
+                WHERE s.location Like ?;
                 """,new PetRowMapper(),location);
+    }
+    
+    public List<Pet> findPetByShelterName(String shelterName,String order){
+        String query = String.format("""
+            SELECT p.idpet,p.name,p.species,p.breed,p.date_of_birth,p.gender,p.health_status,p.behavior,p.description,p.house_training,p.neuturing_status,p.shelter_id,p.join_date
+            FROM pet p
+            INNER JOIN (SELECT idshelter ,name ,location from shelter s)
+            ON p.shelter_id = s.idshelter
+            WHERE s.name Like '%s%%' ORDER BY %s;
+    """, shelterName,order);
+        return jdbc.query(query,new PetRowMapper());
+    }
+
+    public List<Pet> findPetsByShelterId(int shelterId){
+        return jdbc.query("SELECT * FROM pet p WHERE p.shelter_id = ?", new PetRowMapper(), shelterId);
+    }
+
+    public int removePet(long petId){
+        return jdbc.update("DELETE FROM pet WHERE pet.idpet = ?", petId);
     }
 
 
