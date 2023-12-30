@@ -49,6 +49,34 @@ public class ShelterDao {
         return jdbc.update("DELETE FROM shelter WHERE shelter.shelter_id = ?", shelterId);
     }
 
+    public int changeAttribute(String attr , String value , String shelterId){
+        return jdbc.update("""
+                UPDATE shelter
+                SET ? = ?
+                WHERE idshelter = ?;
+                """,
+                attr,
+                value,
+                shelterId
+                );
+    }
+
+    public int changeManager(String managerEmail , String shelterName){
+        // Optional<Staff> st = staff.getStaffByEmail(managerEmail);
+        // if(st.isEmpty()) return 0;
+        // Staff manager = st.get();
+        return jdbc.update("""
+                SELECT @MANAGER := staff_id
+                FROM staff s
+                WHERE s.email = ?;
+                UPDATE shelter s
+                SET s.manager_id = @MANAGER
+                WHERE s.name = ?;
+                """,
+                managerEmail,
+                shelterName
+                );
+    }
 
     static class ShelterRowMapper implements RowMapper<Shelter>{
 
