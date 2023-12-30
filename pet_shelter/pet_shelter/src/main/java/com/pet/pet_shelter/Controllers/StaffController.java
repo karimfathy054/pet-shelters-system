@@ -9,12 +9,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+
 @RestController
 @CrossOrigin
 @RequestMapping("/staff")
 public class StaffController {
     @Autowired
     StaffService staffService;
+
     @PostMapping("/login")
     public ResponseEntity<Staff> login(@RequestBody Map<String, String> body){
         Staff staff = staffService.signIn(body.get("email"), body.get("password"));
@@ -95,4 +97,14 @@ public class StaffController {
         if(!response.equals("Field Changed")) return ResponseEntity.status(409).body(response);
         return ResponseEntity.ok().body(response);
     }
+
+    @GetMapping("/ShelterId={shelterId}")
+    public List<Staff> getStaffByShelterId(@PathVariable int shelterId) {
+        return staffService.getStaffByShelterId(shelterId);
+    }
+    @GetMapping("/ShelterName={shelterName}")
+    public List<Staff> getStaffByShelterName(@PathVariable String shelterName) {
+        return staffService.getStaffByShelterName(shelterName);
+    }
+    
 }
