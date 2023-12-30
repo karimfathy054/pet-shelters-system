@@ -1,7 +1,28 @@
 import styles from "../CSS/profileStyles.module.css";
 import { useState, useEffect } from "react";
 export default function Requests({ user }) {
-    const [applications, setPplications] = useState([]);
+    const [applications, setApplications] = useState([]);
+    const [temp, setTemp] = useState(true);
+
+    useEffect(() => {
+        if (temp) {
+            fetch(`http://localhost:8080/adopter/getNotification/${user.adopterId}`, {
+                method: 'GET',
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.status) {
+                        setApplications(data);
+                    }
+                    console.log(data);
+                    setTemp(false);
+                })
+                .catch(error => {
+                    console.error('Error creating user:', error);
+                    setTemp(false);
+                });
+        }
+    })
 
     const handleAcceptPet = () => {
 

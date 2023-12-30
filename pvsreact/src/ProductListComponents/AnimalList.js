@@ -352,8 +352,8 @@ export default function AnimalList({ user }) {
                     <div className={styles.brand}><p>gender</p>{specialProduct.gender}</div>
                     <div className={styles.brand}><p>Health Status</p>{specialProduct.healthStatus}</div>
                     <div className={styles.brand}><p>behavior</p>{specialProduct.behavior}</div>
-                    <div className={styles.brand}><p>trainingStatus</p>{specialProduct.trainingStatus}</div>
-                    <div className={styles.brand}><p>neuteringStatus</p>{specialProduct.neuteringStatus}</div>
+                    <div className={styles.brand}><p>trainingStatus</p>{specialProduct.houseTraining}</div>
+                    <div className={styles.brand}><p>neuteringStatus</p>{specialProduct.neuteringStatus ? <>Yes</> : <>No</>}</div>
                     <div className={styles.category}><p>Birth-Date</p>{specialProduct.birthDate}</div>
                     <div className={styles.cart} onClick={handleAdopt}><FaCartShopping /> Adopt</div>
                 </div>
