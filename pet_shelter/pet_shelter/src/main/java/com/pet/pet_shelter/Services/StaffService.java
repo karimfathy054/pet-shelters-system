@@ -366,7 +366,7 @@ public class StaffService {
                 String addRecordQuery =
                         String.format("INSERT INTO adoption_record(adopting_family, pet_id) " +
                                         "VALUES('%s', %s);"
-                                ,fullName,adoptionApplication.getAdopterId());
+                                ,fullName,adoptionApplication.getPetID());
                 try{
                     conn.prepareStatement(addRecordQuery).execute();
                     // procedures

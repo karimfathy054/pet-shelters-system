@@ -53,16 +53,17 @@ public class DataHandle {
 
             String dbName = "mydb";
             String dbUser = "root";
-            String dbPass = "password";
+            String dbPass = "#mora951753132547698#";
 
 
             String restorePath = jarDir + "\\backup" + "\\" + s;
             String command = "mysql -u " + dbUser +  " -p"+dbPass+ " " + dbName + " < \""+restorePath+"\"";
             ProcessBuilder builder = new ProcessBuilder(
-                    "cmd.exe", "/c", "cd C:\\Program Files\\MySQL\\MySQL Server 8.1 && "+ command);
+                    "cmd.exe", "/c", "cd C:\\Program Files\\MySQL && "+ command);
             builder.redirectErrorStream(true);
             Process p = builder.start();
             int processComplete = p.waitFor();
+            System.out.println(command);
             if (processComplete == 0) {
                 return "Restore Complete";
             } else {

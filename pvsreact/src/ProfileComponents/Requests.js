@@ -25,14 +25,15 @@ export default function Requests({ user }) {
         }
     })
 
-    const handleAcceptPet = () => {
+    const handleAcceptPet = (e) => {
+        console.log(applications[e.target.id])
         fetch(`http://localhost:8080/staff/acceptApplication`, {
-            method: 'GET',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                id: user.shelterID,
+                id: applications[e.target.id].appId,
                 status: "accept"
             })
         })
@@ -49,14 +50,15 @@ export default function Requests({ user }) {
                 console.error('Error creating user:', error);
             });
     }
-    const handleRefusePet = () => {
+    const handleRefusePet = (e) => {
+        console.log(applications)
         fetch(`http://localhost:8080/staff/acceptApplication`, {
-            method: 'GET',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                id: user.shelterID,
+                id: applications[e.target.id].appId,
                 status: "reject"
             })
         })
@@ -82,14 +84,14 @@ export default function Requests({ user }) {
                             return (
                                 (<div class={styles.box}>
                                     <div class={styles.text}>
-                                        <h3>Name</h3>
-                                        <p>description</p>
+                                        <h3>{product.petName}</h3>
+                                        <p>{product.description}</p>
                                     </div>
-                                    <div className={styles.brand}><p>Status</p>Status</div>
-                                    <div className={styles.category}><p>Breed</p>breed</div>
+                                    <div className={styles.brand}><p>Breed</p>{product.breed}</div>
+                                    <div className={styles.category}><p>Breed</p>{product.status}</div>
                                     <div className={styles.actionProduct}>
-                                        <div className={styles.accept} onClick={handleAcceptPet} id="">Accept</div>
-                                        <div className={styles.refuse} onClick={handleRefusePet} id="">Refuse</div>
+                                        <div className={styles.accept} onClick={handleAcceptPet} id={index}>Accept</div>
+                                        <div className={styles.refuse} onClick={handleRefusePet} id={index}>Refuse</div>
                                     </div>
                                 </div>
                                 )

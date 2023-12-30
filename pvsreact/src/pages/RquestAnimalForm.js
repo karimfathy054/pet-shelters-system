@@ -29,6 +29,7 @@ const AnimalUploadForm = () => {
     const [behavior, setBehavior] = useState('');
     const [health_status, setHealth] = useState('');
     const [birthDate, setBirth] = useState('');
+    const [File, SetFile] = useState({});
     const handleProductName = (e) => {
         setproductName(e.target.value);
         console.log(productName);
@@ -59,7 +60,9 @@ const AnimalUploadForm = () => {
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         console.log(file.name);
+        console.log(file)
         setImage(file.name);
+        SetFile(file)
     }
     const handlegender = (e) => {
         setSelectedValue1(e.target.value);
@@ -108,9 +111,29 @@ const AnimalUploadForm = () => {
                 houseTraining: selectedValue2
             }),
         }).then(data => {
-
             window.alert("Uploading success")
         })
+        // fetch(`http://localhost:8080/documents/add`, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({
+        //         path: image,
+        //         type: File.type,
+        //         petID: 
+        //     })
+        // })
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         if (data === true) {
+        //             window.alert("Successfully Deleted")
+        //         }
+        //         console.log(data);
+        //     })
+        //     .catch(error => {
+        //         console.error('Error creating user:', error);
+        //     });
 
         setDescription("");
         setImage(null);

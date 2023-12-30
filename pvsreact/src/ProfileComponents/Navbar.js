@@ -17,18 +17,20 @@ export default function Navbar({ user }) {
             document.getElementById(styles.notify).style.color = "white";
         }
         if (!user.adopter) {
-            document.getElementById(styles.requests).style.color = "white";
-            document.getElementById("requests1").style.display = "none";
-        }
-        if (user.idAdmin) {
-            document.getElementById(styles.CreateStaff).style.color = "white";
-            document.getElementById("CreateStaff1").style.display = "none";
-            document.getElementById(styles.CreateShelter).style.color = "white";
-            document.getElementById("CreateShelter1").style.display = "none";
-            document.getElementById(styles.assign).style.color = "white";
-            document.getElementById("assign1").style.display = "none";
-            document.getElementById("upgrade1").style.display = "none";
-            document.getElementById(styles.upgrade).style.color = "white";
+            if (!user.idAdmin) {
+                document.getElementById(styles.requests).style.color = "white";
+                document.getElementById("requests1").style.display = "none";
+            }
+            else {
+                document.getElementById(styles.CreateStaff).style.color = "white";
+                document.getElementById("CreateStaff1").style.display = "none";
+                document.getElementById(styles.CreateShelter).style.color = "white";
+                document.getElementById("CreateShelter1").style.display = "none";
+                document.getElementById(styles.assign).style.color = "white";
+                document.getElementById("assign1").style.display = "none";
+                document.getElementById("upgrade1").style.display = "none";
+                document.getElementById(styles.upgrade).style.color = "white";
+            }
         }
     }
     const handleCreateStaff = () => {
@@ -37,10 +39,10 @@ export default function Navbar({ user }) {
         document.getElementById(styles.setting).style.color = "white";
         document.getElementById(styles.CreateStaff).style.color = "#f22c5c";
         if (user.idAdmin) {
-            document.getElementById(styles.requests).style.color = "white";
+            // document.getElementById(styles.requests).style.color = "white";
             document.getElementById(styles.CreateShelter).style.color = "white";
             document.getElementById("CreateShelter1").style.display = "none";
-            document.getElementById("requests1").style.display = "none";
+            // document.getElementById("requests1").style.display = "none";
             document.getElementById("assign1").style.display = "none";
             document.getElementById(styles.assign).style.color = "white";
             document.getElementById("upgrade1").style.display = "none";
@@ -67,12 +69,12 @@ export default function Navbar({ user }) {
 
     const handleCreateShelter = () => {
         document.getElementById("CreateShelter1").style.display = "block";
-        document.getElementById("requests1").style.display = "none";
+        // document.getElementById("requests1").style.display = "none";
         document.getElementById("CreateStaff1").style.display = "none";
         document.getElementById("info").style.display = "none";
         document.getElementById(styles.setting).style.color = "white";
         document.getElementById(styles.CreateStaff).style.color = "white";
-        document.getElementById(styles.requests).style.color = "white";
+        // document.getElementById(styles.requests).style.color = "white";
         document.getElementById(styles.CreateShelter).style.color = "#f22c5c";
         document.getElementById("assign1").style.display = "none";
         document.getElementById(styles.assign).style.color = "white";
@@ -89,13 +91,13 @@ export default function Navbar({ user }) {
 
     const handleAssign = () => {
         document.getElementById("assign1").style.display = "block";
-        document.getElementById("requests1").style.display = "none";
+        // document.getElementById("requests1").style.display = "none";
         document.getElementById("CreateStaff1").style.display = "none";
         document.getElementById("info").style.display = "none";
         document.getElementById(styles.assign).style.color = "#f22c5c";
         document.getElementById(styles.setting).style.color = "white";
         document.getElementById(styles.CreateStaff).style.color = "white";
-        document.getElementById(styles.requests).style.color = "white";
+        // document.getElementById(styles.requests).style.color = "white";
         document.getElementById("CreateShelter1").style.display = "none";
         document.getElementById(styles.CreateShelter).style.color = "white";
         document.getElementById("upgrade1").style.display = "none";
@@ -104,17 +106,54 @@ export default function Navbar({ user }) {
 
     const handleUpgrade = () => {
         document.getElementById("assign1").style.display = "none";
-        document.getElementById("requests1").style.display = "none";
+        // document.getElementById("requests1").style.display = "none";
         document.getElementById("CreateStaff1").style.display = "none";
         document.getElementById("info").style.display = "none";
         document.getElementById(styles.assign).style.color = "white";
         document.getElementById(styles.setting).style.color = "white";
         document.getElementById(styles.CreateStaff).style.color = "white";
-        document.getElementById(styles.requests).style.color = "white";
+        // document.getElementById(styles.requests).style.color = "white";
         document.getElementById("CreateShelter1").style.display = "none";
         document.getElementById(styles.CreateShelter).style.color = "white";
         document.getElementById("upgrade1").style.display = "block";
         document.getElementById(styles.upgrade).style.color = "#f22c5c";
+    }
+    const handleBackUp = () => {
+        fetch(`http://localhost:8080/dataBackup/backup`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(data => {
+                if (data.status === 200) {
+                    window.alert("Successfully Rejected")
+                }
+                else {
+                    window.alert("Error")
+                }
+                console.log(data);
+            })
+            .catch(error => {
+                console.error('Error creating user:', error);
+            });
+    }
+    const handleRestore = () => {
+        fetch(`http://localhost:8080/dataBackup/restore`, {
+            method: 'POST'
+        })
+            .then(data => {
+                if (data.status === 200) {
+                    window.alert("Successfully Rejected")
+                }
+                else {
+                    window.alert("Error")
+                }
+                console.log(data);
+            })
+            .catch(error => {
+                console.error('Error creating user:', error);
+            });
     }
     return (
         <>
@@ -125,15 +164,16 @@ export default function Navbar({ user }) {
                     <li><div id={styles.setting} className={styles.li} onClick={handleSetting}><IoIosSettings />Setting</div></li>
                     {user.adopter ? (<div id={styles.notify} className={styles.li} onClick={handleNotify}><IoIosNotifications />Notifycations</div>) : (
                         <>
-                            <li><div id={styles.requests} className={styles.li} onClick={handleRequests}><FaCodePullRequest />Adoption Requests</div></li>
                         </>)}
                     {user.idAdmin ? (<>
                         <li><div id={styles.CreateStaff} className={styles.li} onClick={handleCreateStaff}><FaUserPlus />Create Staff</div></li>
                         <li><div id={styles.upgrade} className={styles.li} onClick={handleUpgrade}><FaUserPlus />Upgrade Staff</div></li>
                         <li><div id={styles.CreateShelter} className={styles.li} onClick={handleCreateShelter}><MdOutlineAdminPanelSettings />Create Shelter</div></li>
                         <li><div id={styles.assign} className={styles.li} onClick={handleAssign}><MdOutlineAssignmentInd />Assign Staff</div></li>
+                        <div onClick={handleBackUp}>BackUp</div>
+                        <div onClick={handleRestore}>Restore</div>
                     </>
-                    ) : (<></>)}
+                    ) : !user.adopter ? (<><li><div id={styles.requests} className={styles.li} onClick={handleRequests}><FaCodePullRequest />Adoption Requests</div></li></>) : (<></>)}
                 </ul>
             </div>
         </>
