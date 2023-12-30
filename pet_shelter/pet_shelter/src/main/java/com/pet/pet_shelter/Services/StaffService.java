@@ -34,7 +34,7 @@ public class StaffService {
     @Autowired
     StaffDao staffDao;
     private String username = "root";
-    private String password = "root";
+    private String password = "#mora951753132547698#";
     private String url = "jdbc:mysql://localhost:3306/mydb";
     StaffService() throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.jdbc.Driver");
@@ -218,7 +218,7 @@ public class StaffService {
 
 
 
-    public String addPet(Pet pet) {
+    public long addPet(Pet pet) {
         String shelterId;
         if(pet.getShelterId()==0){
             shelterId = "null";
@@ -235,10 +235,10 @@ public class StaffService {
         try{
             conn.prepareStatement(addPetQuery).execute();
             Pet p = petDao.findPetByName(pet.getName(), pet.getSpecies(), pet.getBreed()).get();
-            return p.getId().toString();
+            return p.getId();
         }catch (SQLException e) {
             e.printStackTrace();
-            return e.getMessage();
+            return -1;
         }
     }
 

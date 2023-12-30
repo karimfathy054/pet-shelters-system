@@ -30,6 +30,7 @@ const AnimalUploadForm = () => {
     const [health_status, setHealth] = useState('');
     const [birthDate, setBirth] = useState('');
     const [File, SetFile] = useState({});
+    const [petID, setPetID] = useState(0);
     const handleProductName = (e) => {
         setproductName(e.target.value);
         console.log(productName);
@@ -110,9 +111,13 @@ const AnimalUploadForm = () => {
                 shelterId: user.shelterID,
                 houseTraining: selectedValue2
             }),
-        }).then(data => {
-            window.alert("Uploading success")
         })
+            .then((data) => data.json())
+            .then(data => {
+                console.log(data)
+                setPetID(data);
+                window.alert("Uploading success")
+            })
         // fetch(`http://localhost:8080/documents/add`, {
         //     method: 'POST',
         //     headers: {
@@ -135,17 +140,66 @@ const AnimalUploadForm = () => {
         //         console.error('Error creating user:', error);
         //     });
 
-        setDescription("");
-        setImage(null);
-        setproductName("");
-        setSelectedValue1("male");
-        setSelectedValue2("trained");
-        setSelectedValue3(1);
-        setBirth("");
-        setBreed("");
-        setHealth("");
-        setSpecies("");
-        setBehavior("");
+        // setDescription("");
+        // setproductName("");
+        // setSelectedValue1("male");
+        // setSelectedValue2("trained");
+        // setSelectedValue3(1);
+        // setBirth("");
+        // setBreed("");
+        // setHealth("");
+        // setSpecies("");
+        // setBehavior("");
+    }
+
+    const handleSubmit2 = (e) => {
+        e.preventDefault();
+        if (File.type === "application/pdf") {
+            fetch(`http://localhost:8080/documents/add`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    path: image,
+                    type: "pdf",
+                    petID: petID
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data === true) {
+                        window.alert("Successfully Added")
+                    }
+                    console.log(data);
+                })
+                .catch(error => {
+                    console.error('Error creating user:', error);
+                });
+        }
+        else {
+            fetch(`http://localhost:8080/documents/add`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    path: image,
+                    type: "image",
+                    petID: petID
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data === true) {
+                        window.alert("Successfully Added")
+                    }
+                    console.log(data);
+                })
+                .catch(error => {
+                    console.error('Error creating user:', error);
+                });
+        }
     }
 
     return (
@@ -259,6 +313,7 @@ const AnimalUploadForm = () => {
 
                                 </div>
                                 <button className={styles.button} type="submit" onClick={handleSubmit}>Upload Animal</button>
+                                <button className={styles.button} type="submit" onClick={handleSubmit2}>Upload File</button>
                             </form>
                         </div>
                     </fieldset>

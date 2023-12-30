@@ -74,12 +74,9 @@ public class StaffController {
     }
 
     @PostMapping("/addPet")
-    public ResponseEntity<String> addPet(@RequestBody Pet pet){
-        String response = staffService.addPet(pet);
-        if(response.equals("Pet Added!!")){
-            return ResponseEntity.ok().body(response);
-        }
-        return ResponseEntity.status(409).body(response);
+    public long addPet(@RequestBody Pet pet){
+        long response = staffService.addPet(pet);
+        return response;
     }
 
     @DeleteMapping("/delete/petId={petId}")

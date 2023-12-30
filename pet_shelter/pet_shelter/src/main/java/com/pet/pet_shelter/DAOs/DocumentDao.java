@@ -21,7 +21,7 @@ public class DocumentDao {
     public int addDoc(Document doc){
         return jdbc.update("insert into documents (path,type,pet_id) values (?,?,?)",
                 doc.getPath(),
-                doc.getType(),
+                doc.getType().toString(),
                 doc.getPetID()
             );
     }
