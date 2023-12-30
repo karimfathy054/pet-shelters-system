@@ -20,10 +20,10 @@ export default function CreateStaff({ user }) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                firstName: firstName,
+                firstname: firstName,
                 lastName: lastName,
-                shelterId: shelterId,
-                idAdmin: 0,
+                isAdmin: 0,
+                shelterID: 0,
                 phone: phone,
                 email: email,
                 password: password
@@ -48,7 +48,6 @@ export default function CreateStaff({ user }) {
                             <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required></input>
                             <input type="password" placeholder="Confirm Password" value={confirmedPassword} onChange={(e) => setConfirmedPassword(e.target.value)} pattern={password} title="Password and Confirm Password does not match." required></input>
                             <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required></input>
-                            <input type="number" placeholder="shelterId" value={shelterId} onChange={(e) => setShelterId(e.target.value)}></input>
                             <PhoneInput id="phone" placeholder="Enter phone number" value={phone} onChange={setPhone} required />
                             <button type="submit">Create</button>
                         </form>

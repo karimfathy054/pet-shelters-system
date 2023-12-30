@@ -35,13 +35,13 @@ export default function Signin({ onLogin }) {
                     console.log(data)
                     onLogin({
                         email: data.email,
-                        firstName: data.firstName,
-                        idAdmin: data.idAdmin,
+                        firstName: data.firstname,
+                        idAdmin: data.isAdmin,
                         lastName: data.lastName,
                         password: data.password,
                         phone: data.phone,
                         shelterID: data.shelterID,
-                        staffId: data.staffId
+                        staffId: data.id
                     });
                 })
                 .catch(error => { console.error('Error creating user:', error); window.alert("Account Not Found Login") });
