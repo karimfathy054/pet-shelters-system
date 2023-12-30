@@ -35,7 +35,7 @@ public class StaffDao {
     }
 
     public boolean checkStaffIsAdmin(long id){
-        List<Staff> res = jdbc.query("select is_admin from staff where staff.staff_id = ?",new StaffRowMapper() ,id);
+        List<Staff> res = jdbc.query("select * from staff where staff.staff_id = ?",new StaffRowMapper() ,id);
         if(res.isEmpty()) return false;
         else{
             Optional<Staff> st = res.stream().findFirst();

@@ -22,13 +22,13 @@ public class ShelterService {
         if(shelter.getLocation() == null || shelter.getLocation() .equals("")) return false;
         if(shelter.getPhoneNumber() == null || shelter.getPhoneNumber() .equals("")) return false;
         if(shelter.getManagerId() == null) return false;
-        if(staffDao.checkStaffIsAdmin(shelter.getManagerId())) return false;
+        if(!staffDao.checkStaffIsAdmin(shelter.getManagerId())) return false;
         shelterDao.addShelter(shelter);
         return true;
     }
 
     public Shelter getShelterData(Integer shelterId){
-        Optional<Shelter> res = shelterDao.getShelterById(shelterId);;
+        Optional<Shelter> res = shelterDao.getShelterById(shelterId);
         if(res.isPresent()) return res.get();
         else return null;
     }
