@@ -9,12 +9,12 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class PetShelterApplication {
 
 	public static void main(String[] args) {
-//		SpringApplication.run(PetShelterApplication.class, args);
-		SpringApplicationBuilder builder = new SpringApplicationBuilder(PetShelterApplication .class);
-
-		builder.headless(false);
-
-		ConfigurableApplicationContext context = builder.run(args);
+		SpringApplication.run(PetShelterApplication.class, args);
+//		SpringApplicationBuilder builder = new SpringApplicationBuilder(PetShelterApplication .class);
+//
+//		builder.headless(false);
+//
+//		ConfigurableApplicationContext context = builder.run(args);
 	}
 
 }
