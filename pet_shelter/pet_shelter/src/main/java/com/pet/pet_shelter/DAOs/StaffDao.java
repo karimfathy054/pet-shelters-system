@@ -48,6 +48,20 @@ public class StaffDao {
         return jdbc.query("SELECT * FROM staff s WHERE s.email = ?", new StaffRowMapper(),staffEmail).stream().findFirst();
     }
 
+    public List<Staff> getStaffByShelterId(long shelterId){
+        return jdbc.query("SELECT * FROM staff s WHERE s.shelter_id = ?",new StaffRowMapper() ,shelterId);
+    }
+    public List<Staff> getStaffByShelterName(String shelterName){
+        return jdbc.query("""
+                SELECT s.staff_id ,s.first_name ,s.last_name ,s.shelter_id ,s.is_admin ,s.phone ,s.email ,s.password
+                FROM staff s
+                JOIN (SELECT idshelter ,name from shelter x)
+                ON x.idshelter = s.shelter_id
+                WHERE x.name = ?;
+                """,new StaffRowMapper() ,shelterName);
+    }
+
+
     static class StaffRowMapper implements RowMapper<Staff>{
 
         @Override
