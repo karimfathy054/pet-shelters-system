@@ -63,11 +63,12 @@ public class AdopterController {
         }
         return ResponseEntity.status(409).body(response);
     }
-    @GetMapping("/search/{field}/{key}")
-    public ResponseEntity<List<Pet>> searchPets(@PathVariable String field, @PathVariable String key){
+    @GetMapping("/search/{field}/{key}/{order}")
+    public ResponseEntity<List<Pet>> searchPets(@PathVariable String field, @PathVariable String key, @PathVariable String order){
         System.out.println("field = " + field);
         System.out.println("key = " + key);
-        List<Pet> list = adopterService.searchPets(field, key);
+        System.out.println("order = " + order);
+        List<Pet> list = adopterService.searchPets(field, key, order);
         if(list==null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok().body(list);
     }

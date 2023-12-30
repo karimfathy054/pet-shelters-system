@@ -165,12 +165,14 @@ public class AdopterService {
         put("neuteringStatus", "neutering_status");
         put("shelterId", "shelter_id");
         put("joinDate", "join_date");
+        put("id", "idpet");
     }};
-    public List<Pet> searchPets(String field, String key) {
+    public List<Pet> searchPets(String field, String key, String order) {
         if(mapToDB.containsKey(field)) field = mapToDB.get(field);
+        if(mapToDB.containsKey(order)) order = mapToDB.get(order);
         String searchQuery = String.format(
-                "SELECT * FROM pet WHERE %s LIKE '%s%%'"
-                ,field, key
+                "SELECT * FROM pet WHERE %s LIKE '%s%%' ORDER BY %s"
+                ,field, key, order
         );
         System.out.println("searchQuery = " + searchQuery);
 
