@@ -5,7 +5,7 @@ export default function Upgrade({ user }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        fetch('http://localhost:8080/staff/associateStaffToShelter', {
+        fetch('http://localhost:8080/staff/makeAdmin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -18,14 +18,14 @@ export default function Upgrade({ user }) {
                 console.log(data)
                 if (data.status === 409) { window.alert("Error in Upgrading") }
                 else if (data.status === 200) {
-                    window.alert("Asign Upgrading")
+                    window.alert("Upgrading Successful")
                 }
             })
             .catch(error => { console.error('Error creating user:', error); window.alert("Error in Upgrading") });
     }
     return (
         <>
-            <div id="assign1" className={styles.assign}>
+            <div id="upgrade1" className={styles.upgrade}>
                 <div class={styles.container}>
                     <div class={styles.content}>
                         <h2>Staff Information</h2>

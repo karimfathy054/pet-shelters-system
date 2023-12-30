@@ -6,12 +6,15 @@ import com.pet.pet_shelter.DTOs.AdoptionApplication;
 import com.pet.pet_shelter.DTOs.Notification;
 import com.pet.pet_shelter.DTOs.Pet;
 import com.pet.pet_shelter.Services.AdopterService;
+import com.pet.pet_shelter.Services.PetService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
 @CrossOrigin
@@ -20,6 +23,9 @@ public class AdopterController {
 
     @Autowired
     AdopterService adopterService;
+
+    @Autowired
+    PetService petService;
 
     @PostMapping("/signIn")
     public ResponseEntity<Adopter> signIn(@RequestBody Map<String, String> body){
@@ -68,6 +74,16 @@ public class AdopterController {
         System.out.println("field = " + field);
         System.out.println("key = " + key);
         System.out.println("order = " + order);
+        if(field.equals("location")){
+            List<Pet> res = petService.getPetsByLocation(key);
+            if(res.isEmpty()) return ResponseEntity.notFound().build();
+            return ResponseEntity.ok().body(res);
+        }
+        else if(field.equals("shelterName")){
+            List<Pet> res = petService.getPetsByShelterName(key,order);
+            if(res.isEmpty()) return ResponseEntity.notFound().build();
+            return ResponseEntity.ok().body(res);
+        }
         List<Pet> list = adopterService.searchPets(field, key, order);
         if(list==null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok().body(list);
@@ -85,4 +101,12 @@ public class AdopterController {
         if(response.equals("Notification Deleted!!"))  return ResponseEntity.ok().body(response);
         else return ResponseEntity.status(404).body(response);
     }
+
+    @GetMapping("/pets")
+    public List<Pet> getAllPets() {
+        return petService.getAll();
+    }
+    
+
+
 }

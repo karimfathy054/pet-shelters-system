@@ -737,3 +737,78 @@ form .searchIcon {
 }
 
 /* End CreateShelter */
+/* Start Upgrade */
+.upgrade {
+    display: none;
+    flex-grow: 18;
+    align-items: stretch;
+    padding-top: 120px;
+    padding-bottom: 120px;
+    max-width: 1300px;
+    background-color: #eff2f3;
+    color: var(--Second-color);
+}
+
+.upgrade .content h2 {
+    display: flex;
+    align-items: center;
+    color: var(--Second-color);
+}
+
+.upgrade .content form input {
+    margin: 10px 0;
+    border: none;
+    border-bottom: 1px solid #bcbcbc;
+    padding: 10px;
+    width: 100%;
+    font-size: 17px;
+    background-color: inherit;
+}
+
+.upgrade .content form input:focus {
+    outline: none;
+}
+
+.upgrade .content form input::placeholder {
+    font-size: 15px;
+    text-transform: uppercase;
+    color: #777;
+}
+
+.upgrade .content form button {
+    width: 30%;
+    margin: 30px auto;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    background-color: var(--Second-color);
+    color: white;
+    cursor: pointer;
+    transition: var(--main-transition);
+}
+
+.upgrade .content form button:hover {
+    box-shadow: -10px 7px 20px rgba(0, 0, 0, 0.341);
+    background-color: var(--back-ground-color);
+    color: white;
+}
+
+.upgrade .content a {
+    width: fit-content;
+    align-self: flex-start;
+    color: var(--Second-color);
+    padding: 20px 0 0 20px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 15px;
+    transition: var(--main-transition);
+}
+
+.upgrade .content form a:hover {
+    text-shadow: -10px 7px 20px rgba(0, 0, 0, 0.541);
+}
+
+/* End Upgrade */
