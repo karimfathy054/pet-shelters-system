@@ -6,7 +6,10 @@ import com.pet.pet_shelter.DAOs.NotificationDao;
 import com.pet.pet_shelter.DTOs.Adopter;
 import com.pet.pet_shelter.DTOs.AdoptionApplication;
 import com.pet.pet_shelter.DTOs.Notification;
+import com.pet.pet_shelter.DTOs.Pet;
 import com.pet.pet_shelter.ENUMS.ApplicationStatus;
+import com.pet.pet_shelter.ENUMS.Gender;
+import com.pet.pet_shelter.ENUMS.HouseTraining;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +27,8 @@ public class AdopterService {
     private Connection conn;
     @Autowired
     NotificationDao notificationDao;
-    private String username = "scott";
-    private String password = "01223624409ABab@";
+    private String username = "root";
+    private String password = "password";
     private String url = "jdbc:mysql://localhost:3306/mydb";
     AdopterService() throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.cj.jdbc.Driver");
@@ -197,6 +200,8 @@ public class AdopterService {
         }catch (SQLException e) {
             e.printStackTrace();
             return null;
+        }
+    }
     public List<Notification> getAllNotification(Long id) {
 
         return  notificationDao.getNotificationsforUser(id);

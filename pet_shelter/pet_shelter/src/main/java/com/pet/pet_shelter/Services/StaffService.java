@@ -5,10 +5,16 @@ import com.pet.pet_shelter.DAOs.AdopterDao;
 import com.pet.pet_shelter.DAOs.NotificationDao;
 import com.pet.pet_shelter.DTOs.*;
 import com.pet.pet_shelter.ENUMS.ApplicationStatus;
+import com.pet.pet_shelter.ENUMS.Gender;
+import com.pet.pet_shelter.ENUMS.HouseTraining;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class StaffService {
@@ -18,8 +24,8 @@ public class StaffService {
     AdopterDao adopterDao;
     @Autowired
     NotificationDao notificationDao;
-    private String username = "scott";
-    private String password = "01223624409ABab@";
+    private String username = "root";
+    private String password = "password";
     private String url = "jdbc:mysql://localhost:3306/mydb";
     StaffService() throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.jdbc.Driver");
@@ -376,6 +382,32 @@ public class StaffService {
                 e.printStackTrace();
                 return e.getMessage();
             }
+        }
+    }
+    private Map<String, String > mapToDB = new HashMap<>(){{
+        put("birthDate", "date_of_birth");
+        put("healthStatus", "health_status");
+        put("houseTraining", "house_training");
+        put("neuteringStatus", "neutering_status");
+        put("shelterId", "shelter_id");
+        put("joinDate", "join_date");
+    }};
+    public String changePets(String field, String key, long petId) {
+        if(!key.equals("null") && !field.equals("shelterId")) key = "'" + key + "'";
+
+        if(mapToDB.containsKey(field)) field = mapToDB.get(field);
+        String changeQuery = String.format(
+                "UPDATE pet SET %s = %s where idpet = %d;"
+                ,field, key, petId
+        );
+        System.out.println("changeQuery = " + changeQuery);
+
+        try{
+            conn.prepareStatement(changeQuery).execute();
+            return "Field Changed";
+        }catch (SQLException e) {
+            e.printStackTrace();
+            return e.getMessage();
         }
     }
 }

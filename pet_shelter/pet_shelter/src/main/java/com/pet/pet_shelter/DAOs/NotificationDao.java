@@ -9,7 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
-import com.pet.pet_shelter.DAOs.DTOs.Notification;
+import com.pet.pet_shelter.DTOs.Notification;
 
 @Component
 public class NotificationDao {

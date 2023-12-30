@@ -1,4 +1,4 @@
-package com.pet.pet_shelter.DAOs.DTOs;
+package com.pet.pet_shelter.DTOs;
 
 
 import java.sql.Date;

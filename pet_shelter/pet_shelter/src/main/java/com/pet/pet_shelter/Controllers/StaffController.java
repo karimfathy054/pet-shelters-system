@@ -1,11 +1,13 @@
 package com.pet.pet_shelter.Controllers;
-import com.pet.pet_shelter.DAOs.DTOs.Adopter;
-import com.pet.pet_shelter.DAOs.DTOs.Pet;
-import com.pet.pet_shelter.DAOs.DTOs.Staff;
+import com.pet.pet_shelter.DTOs.Adopter;
+import com.pet.pet_shelter.DTOs.Pet;
+import com.pet.pet_shelter.DTOs.Staff;
 import com.pet.pet_shelter.Services.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 import java.util.Map;
 @RestController
 @CrossOrigin
@@ -84,5 +86,13 @@ public class StaffController {
             return ResponseEntity.ok().body(response);
         }
         return ResponseEntity.status(409).body(response);
+    }
+    @PostMapping("/change/{field}/{key}/{petId}")
+    public ResponseEntity<String> changePets(@PathVariable String field, @PathVariable String key, @PathVariable long petId){
+        System.out.println("field = " + field);
+        System.out.println("key = " + key);
+        String response = staffService.changePets(field, key, petId);
+        if(!response.equals("Field Changed")) return ResponseEntity.status(409).body(response);
+        return ResponseEntity.ok().body(response);
     }
 }

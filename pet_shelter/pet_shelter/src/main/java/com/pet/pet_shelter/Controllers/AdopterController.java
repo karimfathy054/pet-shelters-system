@@ -4,6 +4,7 @@ package com.pet.pet_shelter.Controllers;
 import com.pet.pet_shelter.DTOs.Adopter;
 import com.pet.pet_shelter.DTOs.AdoptionApplication;
 import com.pet.pet_shelter.DTOs.Notification;
+import com.pet.pet_shelter.DTOs.Pet;
 import com.pet.pet_shelter.Services.AdopterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
