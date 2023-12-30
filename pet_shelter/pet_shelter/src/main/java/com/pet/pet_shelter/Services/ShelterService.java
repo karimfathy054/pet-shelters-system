@@ -28,7 +28,7 @@ public class ShelterService {
     }
 
     public Shelter getShelterData(Integer shelterId){
-        Optional<Shelter> res = shelterDao.getShelterById(shelterId);;
+        Optional<Shelter> res = shelterDao.getShelterById(shelterId);
         if(res.isPresent()) return res.get();
         else return null;
     }
