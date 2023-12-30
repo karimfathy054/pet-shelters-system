@@ -102,6 +102,7 @@ public class StaffController {
     public ResponseEntity<String> changePets(@PathVariable String field, @PathVariable String key, @PathVariable long petId){
         System.out.println("field = " + field);
         System.out.println("key = " + key);
+        System.out.println(petId);
         String response = staffService.changePets(field, key, petId);
         if(!response.equals("Field Changed")) return ResponseEntity.status(409).body(response);
         return ResponseEntity.ok().body(response);

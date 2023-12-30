@@ -144,10 +144,7 @@ public class AdopterService {
         }
     }
     public String addApplication(long petId, long adopterId) {
-        String addApplicationQuery =
-                String.format("INSERT INTO ADOPTION_APPLICATION(pet_id, adopter_id) " +
-                                "VALUES(%d, %d);"
-                        , petId, adopterId);
+        String addApplicationQuery ="INSERT INTO ADOPTION_APPLICATION(pet_id, adopter_id) " + "VALUES("+petId+", "+adopterId+");";
         System.out.println("Add Application Query = " + addApplicationQuery);
         try{
             conn.prepareStatement(addApplicationQuery).execute();

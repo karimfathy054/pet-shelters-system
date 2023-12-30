@@ -88,6 +88,13 @@ public class AdopterController {
         if(list==null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok().body(list);
     }
+    @GetMapping("/shelterName/{key}")
+    public ResponseEntity<List<Pet>> getPetsByShelterId(@PathVariable int key){
+        System.out.println("key = " + key);
+        List<Pet> res = petService.getPetsByShelterId(key);
+        if(res.isEmpty()) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok().body(res);
+    }
     //----------------------------------------
     @GetMapping("/getNotification/{id}")
     public  ResponseEntity<List<Notification>> getNotification(@PathVariable Long id){

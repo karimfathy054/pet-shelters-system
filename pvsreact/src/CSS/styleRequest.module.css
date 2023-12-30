@@ -55,7 +55,7 @@ form .label {
 
 form .labe3 .input3,
 form .label input:first-child {
-  width: 450px;
+  width: 350px;
   height: 30px;
   border: 1px solid #777;
   font-size: 15px;
@@ -86,7 +86,7 @@ form .labe3 {
   box-shadow: 8px 8px 14px rgba(0, 0, 0, 0.2);
   padding: 20px 30px;
   box-sizing: border-box;
-  width: 90%;
+  width: 100%;
   height: 100%;
   margin-left: 30px;
   position: relative;
@@ -127,7 +127,22 @@ form .labe3 {
   border-radius: 3px;
   margin-bottom: 5px;
   margin-top: 5px;
-  width: 100%;
+  width: 80%;
+  height: 60%;
+  box-sizing: border-box;
+  font-family: Cursive;
+  color: #000000;
+  font-size: 18px;
+}
+
+.input5 {
+  background-color: rgb(255, 255, 255);
+  padding: 15px;
+  border-radius: 3px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  width: 350px;
+  height: 60%;
   box-sizing: border-box;
   font-family: Cursive;
   color: #000000;
@@ -176,7 +191,7 @@ form .labe3 {
   border-radius: 3px;
   margin-bottom: 5px;
   margin-top: 5px;
-  width: 30%;
+  width: 20%;
   height: 25px;
   box-sizing: border-box;
   font-family: Cursive;
@@ -193,6 +208,7 @@ form .labe3 {
 
 .select1 {
   font-size: 20px;
+  color: #000000;
 }
 
 .select3 {
@@ -200,6 +216,7 @@ form .labe3 {
   justify-content: flex-start;
   align-items: center;
   gap: 30px;
+  color: #000000;
 }
 
 .select_button {
@@ -214,4 +231,5 @@ form .labe3 {
 
 .select2 {
   font-size: 20px;
+  color: #000000;
 }

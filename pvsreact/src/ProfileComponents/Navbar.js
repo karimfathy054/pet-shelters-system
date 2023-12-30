@@ -17,14 +17,14 @@ export default function Navbar({ user }) {
             document.getElementById(styles.notify).style.color = "white";
         }
         if (!user.adopter) {
-            document.getElementById("CreateStaff1").style.display = "none";
-            document.getElementById(styles.CreateStaff).style.color = "white";
-        }
-        if (user.idAdmin) {
-            document.getElementById(styles.CreateShelter).style.color = "white";
-            document.getElementById("CreateShelter1").style.display = "none";
             document.getElementById(styles.requests).style.color = "white";
             document.getElementById("requests1").style.display = "none";
+        }
+        if (user.idAdmin) {
+            document.getElementById(styles.CreateStaff).style.color = "white";
+            document.getElementById("CreateStaff1").style.display = "none";
+            document.getElementById(styles.CreateShelter).style.color = "white";
+            document.getElementById("CreateShelter1").style.display = "none";
             document.getElementById(styles.assign).style.color = "white";
             document.getElementById("assign1").style.display = "none";
             document.getElementById("upgrade1").style.display = "none";
@@ -50,17 +50,19 @@ export default function Navbar({ user }) {
 
     const handleRequests = () => {
         document.getElementById("requests1").style.display = "flex";
-        document.getElementById("CreateStaff1").style.display = "none";
+        document.getElementById(styles.requests).style.color = "#f22c5c";
         document.getElementById("info").style.display = "none";
         document.getElementById(styles.setting).style.color = "white";
-        document.getElementById(styles.CreateStaff).style.color = "white";
-        document.getElementById(styles.requests).style.color = "#f22c5c";
-        document.getElementById("CreateShelter1").style.display = "none";
-        document.getElementById(styles.CreateShelter).style.color = "white";
-        document.getElementById("assign1").style.display = "none";
-        document.getElementById(styles.assign).style.color = "white";
-        document.getElementById("upgrade1").style.display = "none";
-        document.getElementById(styles.upgrade).style.color = "white";
+        if (user.idAdmin) {
+            document.getElementById("CreateStaff1").style.display = "none";
+            document.getElementById(styles.CreateStaff).style.color = "white";
+            document.getElementById("CreateShelter1").style.display = "none";
+            document.getElementById(styles.CreateShelter).style.color = "white";
+            document.getElementById("assign1").style.display = "none";
+            document.getElementById(styles.assign).style.color = "white";
+            document.getElementById("upgrade1").style.display = "none";
+            document.getElementById(styles.upgrade).style.color = "white";
+        }
     }
 
     const handleCreateShelter = () => {
