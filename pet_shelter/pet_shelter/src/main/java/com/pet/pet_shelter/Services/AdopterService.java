@@ -2,6 +2,7 @@ package com.pet.pet_shelter.Services;
 
 
 
+import com.pet.pet_shelter.DAOs.AdoptionApplicationDao;
 import com.pet.pet_shelter.DAOs.NotificationDao;
 import com.pet.pet_shelter.DTOs.Adopter;
 import com.pet.pet_shelter.DTOs.AdoptionApplication;
@@ -27,6 +28,8 @@ public class AdopterService {
     private Connection conn;
     @Autowired
     NotificationDao notificationDao;
+    @Autowired
+    AdoptionApplicationDao adoptionApplicationDao;
     private String username = "root";
     private String password = "password";
     private String url = "jdbc:mysql://localhost:3306/mydb";
@@ -144,6 +147,7 @@ public class AdopterService {
         }
     }
     public String addApplication(long petId, long adopterId) {
+        if(!adoptionApplicationDao.checkExistance(petId, adopterId)) return "you already have sent an application";
         String addApplicationQuery ="INSERT INTO ADOPTION_APPLICATION(pet_id, adopter_id) " + "VALUES("+petId+", "+adopterId+");";
         System.out.println("Add Application Query = " + addApplicationQuery);
         try{

@@ -41,6 +41,11 @@ public class AdoptionApplicationDao {
         return jdbc.query("select * from adoption_application where adoption_application.adopter_id = ?",new AdoptionAppRowMapper(),id);
     }
 
+    public boolean checkExistance(long petId, long adopterId){
+        List<AdoptionApplication> res = jdbc.query("SELECT * FROM adoption_application a WHERE a.pet_id = ? AND a.adopter_id = ?",new AdoptionAppRowMapper(), petId,adopterId);
+        return !res.isEmpty();
+    }
+
     static class AdoptionAppRowMapper implements RowMapper<AdoptionApplication>{
 
         @Override
