@@ -1,5 +1,6 @@
 package com.pet.pet_shelter.Services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,10 @@ public class ShelterService {
 
     public boolean changeSheltermanager(String managerEmail , String shelterName){
         return (shelterDao.changeManager(managerEmail, shelterName) == 1);
+    }
+
+    public List<Shelter> findallBYpage(int pageNumber){
+        return shelterDao.getAllShelters(pageNumber);
     }
 
     
