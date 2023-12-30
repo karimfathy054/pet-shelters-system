@@ -8,6 +8,7 @@ import Requests from "../ProfileComponents/Requests";
 import CreateShelter from "../ProfileComponents/CreateShelter";
 import Notify from "../ProfileComponents/Notify";
 import Assign from "../ProfileComponents/Assign";
+import Upgrade from "../ProfileComponents/Upgrade";
 export default function Profile() {
   const location = useLocation();
   const [user, setUser] = useState({});
@@ -28,6 +29,7 @@ export default function Profile() {
         <CreateShelter user={user}></CreateShelter>
         <Notify user={user}></Notify>
         <Assign user={user}></Assign>
+        <Upgrade user={user}></Upgrade>
       </div>
     </>
   )

@@ -27,6 +27,8 @@ export default function Navbar({ user }) {
             document.getElementById("requests1").style.display = "none";
             document.getElementById(styles.assign).style.color = "white";
             document.getElementById("assign1").style.display = "none";
+            document.getElementById("upgrade1").style.display = "none";
+            document.getElementById(styles.upgrade).style.color = "white";
         }
     }
     const handleCreateStaff = () => {
@@ -41,6 +43,8 @@ export default function Navbar({ user }) {
             document.getElementById("requests1").style.display = "none";
             document.getElementById("assign1").style.display = "none";
             document.getElementById(styles.assign).style.color = "white";
+            document.getElementById("upgrade1").style.display = "none";
+            document.getElementById(styles.upgrade).style.color = "white";
         }
     }
 
@@ -55,6 +59,8 @@ export default function Navbar({ user }) {
         document.getElementById(styles.CreateShelter).style.color = "white";
         document.getElementById("assign1").style.display = "none";
         document.getElementById(styles.assign).style.color = "white";
+        document.getElementById("upgrade1").style.display = "none";
+        document.getElementById(styles.upgrade).style.color = "white";
     }
 
     const handleCreateShelter = () => {
@@ -68,6 +74,8 @@ export default function Navbar({ user }) {
         document.getElementById(styles.CreateShelter).style.color = "#f22c5c";
         document.getElementById("assign1").style.display = "none";
         document.getElementById(styles.assign).style.color = "white";
+        document.getElementById("upgrade1").style.display = "none";
+        document.getElementById(styles.upgrade).style.color = "white";
     }
 
     const handleNotify = () => {
@@ -88,8 +96,24 @@ export default function Navbar({ user }) {
         document.getElementById(styles.requests).style.color = "white";
         document.getElementById("CreateShelter1").style.display = "none";
         document.getElementById(styles.CreateShelter).style.color = "white";
+        document.getElementById("upgrade1").style.display = "none";
+        document.getElementById(styles.upgrade).style.color = "white";
     }
 
+    const handleUpgrade = () => {
+        document.getElementById("assign1").style.display = "none";
+        document.getElementById("requests1").style.display = "none";
+        document.getElementById("CreateStaff1").style.display = "none";
+        document.getElementById("info").style.display = "none";
+        document.getElementById(styles.assign).style.color = "white";
+        document.getElementById(styles.setting).style.color = "white";
+        document.getElementById(styles.CreateStaff).style.color = "white";
+        document.getElementById(styles.requests).style.color = "white";
+        document.getElementById("CreateShelter1").style.display = "none";
+        document.getElementById(styles.CreateShelter).style.color = "white";
+        document.getElementById("upgrade1").style.display = "block";
+        document.getElementById(styles.upgrade).style.color = "#f22c5c";
+    }
     return (
         <>
             <div className={styles.navbar}>
@@ -97,9 +121,13 @@ export default function Navbar({ user }) {
                 <ul>
                     <li><Link to='/' className={styles.li}><FaHome />Home</Link></li>
                     <li><div id={styles.setting} className={styles.li} onClick={handleSetting}><IoIosSettings />Setting</div></li>
-                    {user.adopter ? (<div id={styles.notify} className={styles.li} onClick={handleNotify}><IoIosNotifications />Notifycations</div>) : (<li><div id={styles.CreateStaff} className={styles.li} onClick={handleCreateStaff}><FaUserPlus />Create Staff</div></li>)}
+                    {user.adopter ? (<div id={styles.notify} className={styles.li} onClick={handleNotify}><IoIosNotifications />Notifycations</div>) : (
+                        <>
+                            <li><div id={styles.requests} className={styles.li} onClick={handleRequests}><FaCodePullRequest />Adoption Requests</div></li>
+                        </>)}
                     {user.idAdmin ? (<>
-                        <li><div id={styles.requests} className={styles.li} onClick={handleRequests}><FaCodePullRequest />Adoption Requests</div></li>
+                        <li><div id={styles.CreateStaff} className={styles.li} onClick={handleCreateStaff}><FaUserPlus />Create Staff</div></li>
+                        <li><div id={styles.upgrade} className={styles.li} onClick={handleUpgrade}><FaUserPlus />Upgrade Staff</div></li>
                         <li><div id={styles.CreateShelter} className={styles.li} onClick={handleCreateShelter}><MdOutlineAdminPanelSettings />Create Shelter</div></li>
                         <li><div id={styles.assign} className={styles.li} onClick={handleAssign}><MdOutlineAssignmentInd />Assign Staff</div></li>
                     </>

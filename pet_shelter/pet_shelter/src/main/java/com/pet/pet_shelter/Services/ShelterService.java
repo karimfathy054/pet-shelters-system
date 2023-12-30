@@ -22,7 +22,7 @@ public class ShelterService {
         if(shelter.getLocation() == null || shelter.getLocation() .equals("")) return false;
         if(shelter.getPhoneNumber() == null || shelter.getPhoneNumber() .equals("")) return false;
         if(shelter.getManagerId() == null) return false;
-        if(staffDao.checkStaffIsAdmin(shelter.getManagerId())) return false;
+        if(!staffDao.checkStaffIsAdmin(shelter.getManagerId())) return false;
         shelterDao.addShelter(shelter);
         return true;
     }
