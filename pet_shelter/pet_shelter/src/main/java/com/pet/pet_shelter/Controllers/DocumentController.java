@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pet.pet_shelter.DTOs.Document;
 import com.pet.pet_shelter.Services.DocumentsService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +23,7 @@ public class DocumentController {
     DocumentsService docService;
 
     @GetMapping("/id={petId}")
-    public List<Document> getMethodName(@RequestParam long petId) {
+    public List<Document> getMethodName(@PathVariable long petId) {
         return docService.getPetsDocuments(petId);
     }
 
