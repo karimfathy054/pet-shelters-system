@@ -98,7 +98,7 @@ public class PetDao {
     }
 
     public Optional<Pet> findPetByName(String name,String species , String breed){
-        return jdbc.query("SELECT * FROM pet p WHERE p.name = ? AND p.species = ? AND p.breed = ? ",new PetRowMapper(),name,species,breed).stream().findFirst();
+        return jdbc.query("SELECT * FROM pet p WHERE p.name = ? AND p.species = ? AND p.breed = ? ",new PetRowMapper(),name,species,breed).stream().reduce((a,b)->b);
     }
 
     public int removePet(long petId){
